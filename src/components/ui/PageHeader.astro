@@ -1,0 +1,25 @@
+---
+// Top of every inner page: coral label, display title (the page's h1), intro.
+interface Props {
+  label: string;
+  title: string;
+}
+
+const { label, title } = Astro.props;
+---
+
+<header class="border-b border-rule">
+  <div class="container-page grid gap-8 py-16 md:py-24 lg:grid-cols-12 lg:items-end lg:gap-6">
+    <div class="lg:col-span-7">
+      <p class="label text-signal-text">{label}</p>
+      <h1 class="mt-6 text-display text-ink">{title}</h1>
+    </div>
+    {
+      Astro.slots.has('default') && (
+        <div class="max-w-xl text-body text-muted lg:col-span-5">
+          <slot />
+        </div>
+      )
+    }
+  </div>
+</header>

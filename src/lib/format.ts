@@ -12,3 +12,5 @@ export const formatWeekdayTime = (d: Date) =>
 
 export const formatLongDate = (d: Date) =>
   new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: TZ }).format(d);
+
+export const formatYear = (d: Date) => new Intl.DateTimeFormat('en-US', { year: 'numeric', timeZone: TZ }).format(d);

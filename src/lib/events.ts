@@ -18,6 +18,12 @@ export async function getUpcomingEvents(limit?: number, now = new Date()): Promi
   return limit ? upcoming.slice(0, limit) : upcoming;
 }
 
+/** Most recent first. */
+export async function getPastEvents(now = new Date()): Promise<Event[]> {
+  const past = (await getEvents()).filter((e) => (e.data.endDate ?? e.data.date) < now);
+  return past.reverse();
+}
+
 export const EVENT_TYPE_LABELS: Record<Event['data']['type'], string> = {
   talk: 'Speaker series',
   'journal-club': 'Journal club',

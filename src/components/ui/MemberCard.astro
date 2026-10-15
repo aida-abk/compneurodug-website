@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import type { Member } from '../../lib/members';
+import { initials } from '../../lib/members';
+
+interface Props {
+  member: Member;
+}
+
+const { name, role, email, photo, photoAlt, pronouns } = Astro.props.member.data;
+---
+
+<li class="flex flex-col">
+  <div class="aspect-square overflow-hidden rounded-sm border border-rule bg-surface">
+    {
+      photo ? (
+        <Image
+          src={photo}
+          alt={photoAlt ?? `Portrait of ${name}`}
+          width={480}
+          height={480}
+          class="size-full object-cover"
+        />
+      ) : (
+        <div class="flex size-full items-center justify-center" aria-hidden="true">
+          <span class="font-serif text-h1 font-medium text-muted">{initials(name)}</span>
+        </div>
+      )
+    }
+  </div>
+  <h3 class="mt-4 text-h3 font-medium text-ink">{name}</h3>
+  <p class="mt-1 label text-signal-text">
+    {role}
+    {pronouns && <span class="text-muted"> · {pronouns}</span>}
+  </p>
+  {
+    email && (
+      <a href={`mailto:${email}`} class="mt-3 text-small text-muted underline decoration-rule underline-offset-4 hover:text-ink">
+        {email.split('@')[0]}
+        <wbr />@{email.split('@')[1]}
+      </a>
+    )
+  }
+</li>

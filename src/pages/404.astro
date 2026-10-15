@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout title="Page not found">
+  <section class="container-page py-24 md:py-32">
+    <p class="label text-signal-text">Error 404</p>
+    <h1 class="mt-6 max-w-3xl text-display text-ink">This pathway doesn't connect.</h1>
+    <p class="mt-6 max-w-xl text-body text-muted">The page you were looking for has moved or never existed.</p>
+    <div class="mt-10">
+      <Button href="/">Back to the homepage</Button>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,86 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import { SITE } from '../lib/site';
+
+const resources = (await getCollection('resources', (r) => import.meta.env.DEV || !r.data.draft)).sort(
+  (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title),
+);
+
+// Section order and copy. Keys match the `category` field in content files.
+const CATEGORIES = [
+  {
+    key: 'courses',
+    title: 'Courses',
+    intro: 'Classes at Brown that build toward computational neuroscience.',
+  },
+  {
+    key: 'research',
+    title: 'Research',
+    intro: 'Labs, funding and how to get a first research position.',
+  },
+  {
+    key: 'reading',
+    title: 'Reading and learning',
+    intro: 'Free courses, textbooks and places to start on your own.',
+  },
+] as const;
+---
+
+<BaseLayout title="Resources" description="Courses, research opportunities and reading for computational neuroscience at Brown.">
+  <PageHeader label="Resources" title="Resources">
+    Where to start, what to take and who to talk to. Something missing? Tell us and we'll add it.
+  </PageHeader>
+
+  {
+    CATEGORIES.map(({ key, title, intro }, i) => {
+      const items = resources.filter((r) => r.data.category === key);
+      return (
+        <section
+          aria-labelledby={`${key}-heading`}
+          class:list={['py-20 md:py-28', i % 2 === 1 && 'border-y border-rule bg-surface']}
+        >
+          <div class="container-page">
+            <SectionHeader index={`0${i + 1}`} title={title} id={`${key}-heading`}>
+              {intro}
+            </SectionHeader>
+            {items.length > 0 ? (
+              <ul class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {items.map(({ data }) => (
+                  <li class="relative flex flex-col rounded-sm border border-rule bg-field p-6 transition-colors hover:border-ink">
+                    {data.draft && <p class="label text-muted">Draft</p>}
+                    <h3 class="text-h3 font-medium text-ink">
+                      {data.url ? (
+                        <a href={data.url} class="after:absolute after:inset-0" rel="noopener">
+                          {data.title}
+                        </a>
+                      ) : (
+                        data.title
+                      )}
+                    </h3>
+                    <p class="mt-3 flex-1 text-small text-muted">{data.summary}</p>
+                    {data.url && (
+                      <p class="mt-6 label text-signal-text">
+                        {new URL(data.url).hostname.replace(/^www\./, '')} <span aria-hidden="true">↗</span>
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="mt-10 text-small text-muted">
+                Coming soon. Suggestions welcome on{' '}
+                <a href={SITE.substack.home} class="text-signal-text underline underline-offset-4">
+                  Substack
+                </a>
+                .
+              </p>
+            )}
+          </div>
+        </section>
+      );
+    })
+  }
+</BaseLayout>

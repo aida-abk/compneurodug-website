@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import EventList from '../components/ui/EventList.astro';
+import EventsEmpty from '../components/ui/EventsEmpty.astro';
+import { getPastEvents, getUpcomingEvents } from '../lib/events';
+import { SITE } from '../lib/site';
+
+const [upcoming, past] = await Promise.all([getUpcomingEvents(), getPastEvents()]);
+---
+
+<BaseLayout title="Events" description={`Talks, journal club and socials from the ${SITE.name.standard}.`}>
+  <PageHeader label="Events" title="Events">
+    Speaker series, journal club, workshops and socials. Everything is open to any Brown undergraduate, and food is
+    usually involved.
+  </PageHeader>
+
+  <section aria-labelledby="upcoming-heading" class="container-page py-20 md:py-28">
+    <SectionHeader index="01 · Upcoming" title="Coming up" id="upcoming-heading" />
+    {upcoming.length > 0 ? <EventList events={upcoming} /> : <EventsEmpty />}
+  </section>
+
+  {
+    past.length > 0 && (
+      <section aria-labelledby="past-heading" class="border-t border-rule bg-surface py-20 md:py-28">
+        <div class="container-page">
+          <SectionHeader index="02 · Archive" title="Past events" id="past-heading" />
+          <EventList events={past} past />
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

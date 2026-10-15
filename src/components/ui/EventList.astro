@@ -1,0 +1,59 @@
+---
+import type { Event } from '../../lib/events';
+import { EVENT_TYPE_LABELS } from '../../lib/events';
+import { formatDay, formatMonth, formatWeekdayTime, formatYear } from '../../lib/format';
+
+interface Props {
+  events: Event[];
+  /** Past events show the year and drop the time. */
+  past?: boolean;
+}
+
+const { events, past = false } = Astro.props;
+---
+
+<ol class="divide-y divide-rule border-b border-rule">
+  {
+    events.map(({ data }) => (
+      <li class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 py-8 md:grid-cols-12 md:gap-6">
+        <p class="md:col-span-2">
+          <time datetime={data.date.toISOString()} class="flex flex-col">
+            <span class:list={['font-serif text-h1 font-medium', past ? 'text-muted' : 'text-ink']}>
+              {formatDay(data.date)}
+            </span>
+            <span class="label text-muted">
+              {formatMonth(data.date)}
+              {past && ` ${formatYear(data.date)}`}
+            </span>
+          </time>
+        </p>
+        <div class="md:col-span-6">
+          <p class="label text-signal-text">
+            {EVENT_TYPE_LABELS[data.type]}
+            {data.draft && <span class="ml-2 text-muted">· Draft</span>}
+          </p>
+          <h3 class="mt-2 text-h3 font-medium text-ink">
+            {data.link ? (
+              <a href={data.link} class="underline decoration-rule underline-offset-4 hover:decoration-signal-text">
+                {data.title}
+              </a>
+            ) : (
+              data.title
+            )}
+          </h3>
+          <p class="mt-2 text-small text-muted">{data.summary}</p>
+        </div>
+        <dl class="col-span-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-small md:col-span-4 md:col-start-9">
+          {!past && (
+            <>
+              <dt class="label text-muted">When</dt>
+              <dd class="text-ink">{formatWeekdayTime(data.date)}</dd>
+            </>
+          )}
+          <dt class="label text-muted">Where</dt>
+          <dd class="text-ink">{data.location}</dd>
+        </dl>
+      </li>
+    ))
+  }
+</ol>

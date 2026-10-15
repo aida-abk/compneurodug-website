@@ -71,7 +71,7 @@ Before finishing any phase, `npm run build` and `npx astro check` both pass.
 src/
   components/
     layout/     Nav, Footer, page shells
-    ui/         Small reusable pieces (Button, Label, Card)
+    ui/         Reusable pieces: Button, PageHeader, SectionHeader, EventList, EventsEmpty, PostCard, MemberCard, LogoMark
     hero/       3D hero (hero-gate.ts, hero-scene.ts) and its static SVG fallback
     figures/    Scroll-traced line drawings and FIG labels
     home/       Homepage sections (Hero, Mission, WhatWeDo, UpcomingEvents, LatestNewsletter)
@@ -82,7 +82,7 @@ src/
   content.config.ts  Collection schemas — the contract for content files
   layouts/      Base page layout(s)
   lib/          Plain TS helpers (motion/ holds trace.ts and smooth-scroll.ts): site.ts (names, links, nav), events.ts, substack.ts (RSS at build time), format.ts (dates in America/New_York)
-  pages/        Routes
+  pages/        Routes: index, about, events, resources, newsletter, 404
   styles/       tokens.css (variables), global.css (Tailwind + @theme)
 public/         Files served as-is (favicons, OG images, static fallbacks)
 ```
@@ -102,11 +102,12 @@ Work one phase at a time and stop after each for Aida to review in the browser.
 3. Homepage as static layout, no animation — done
 4. 3D hero — done (motion pending review)
 5. Scroll-traced line drawings — done (pending review)
-6. Remaining pages (About/Team, Events, Resources, Newsletter) and the Substack RSS feed at build time
+6. Remaining pages (About/Team, Events, Resources, Newsletter, 404) and the Substack RSS feed at build time — done
 7. Deployment prep (Vercel, GitHub, metadata, Lighthouse pass)
 
 ## Open items
 
 - Headshots: which photo belongs to whom (none attached yet); Ah-Young has no photo listed
-- Resource content and categories (current schema: courses, research, reading)
+- Resources: starter entries are real, verified links (Neuromatch, Neuronal Dynamics, Dayan & Abbott, Carney, UTRA, Neuroscience concentration) chosen by Claude; Aida to review. Brown course entries still needed (one draft placeholder).
+- Copy on About and the homepage is draft.
 - Real events

@@ -1,8 +1,8 @@
 ---
 import SectionHeader from '../ui/SectionHeader.astro';
-import { getUpcomingEvents, EVENT_TYPE_LABELS } from '../../lib/events';
-import { formatDay, formatMonth, formatWeekdayTime } from '../../lib/format';
-import { SITE } from '../../lib/site';
+import EventList from '../ui/EventList.astro';
+import EventsEmpty from '../ui/EventsEmpty.astro';
+import { getUpcomingEvents } from '../../lib/events';
 
 const events = await getUpcomingEvents(4);
 ---
@@ -14,53 +14,5 @@ const events = await getUpcomingEvents(4);
     </a>
   </SectionHeader>
 
-  {
-    events.length > 0 ? (
-      <ol class="divide-y divide-rule border-b border-rule">
-        {events.map(({ data }) => (
-          <li class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 py-8 md:grid-cols-12 md:gap-6">
-            <p class="flex flex-col md:col-span-2">
-              <time datetime={data.date.toISOString()} class="flex flex-col">
-                <span class="font-serif text-h1 font-medium text-ink">{formatDay(data.date)}</span>
-                <span class="label text-muted">{formatMonth(data.date)}</span>
-              </time>
-            </p>
-            <div class="md:col-span-6">
-              <p class="label text-signal-text">
-                {EVENT_TYPE_LABELS[data.type]}
-                {data.draft && <span class="ml-2 text-muted">· Draft</span>}
-              </p>
-              <h3 class="mt-2 text-h3 font-medium text-ink">
-                {data.link ? (
-                  <a href={data.link} class="hover:text-signal-text">
-                    {data.title}
-                  </a>
-                ) : (
-                  data.title
-                )}
-              </h3>
-              <p class="mt-2 text-small text-muted">{data.summary}</p>
-            </div>
-            <dl class="col-span-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-small md:col-span-4 md:col-start-9">
-              <dt class="label text-muted">When</dt>
-              <dd class="text-ink">{formatWeekdayTime(data.date)}</dd>
-              <dt class="label text-muted">Where</dt>
-              <dd class="text-ink">{data.location}</dd>
-            </dl>
-          </li>
-        ))}
-      </ol>
-    ) : (
-      <div class="mt-10 rounded-sm border border-rule bg-surface p-8">
-        <p class="text-h3 font-medium text-ink">Nothing scheduled yet.</p>
-        <p class="mt-2 text-small text-muted">
-          New events go out in the newsletter first.{' '}
-          <a href={SITE.substack.subscribe} class="text-signal-text underline underline-offset-4">
-            Subscribe
-          </a>{' '}
-          to hear about them.
-        </p>
-      </div>
-    )
-  }
+  {events.length > 0 ? <EventList events={events} /> : <EventsEmpty />}
 </section>

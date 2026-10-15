@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import PostCard from '../components/ui/PostCard.astro';
+import Button from '../components/ui/Button.astro';
+import { getLatestPosts } from '../lib/substack';
+import { SITE } from '../lib/site';
+
+// RSS returns the most recent ~20 issues; older ones live on Substack.
+const posts = await getLatestPosts(50);
+---
+
+<BaseLayout title="Newsletter" description={`Every issue of the ${SITE.name.standard} newsletter.`}>
+  <PageHeader label="Newsletter" title="The newsletter">
+    Papers we're reading, people we've met and what's coming up, a few times a term. Written by the DUG, published on
+    Substack.
+    <div class="mt-8 flex flex-wrap gap-3">
+      <Button href={SITE.substack.subscribe}>Subscribe</Button>
+      <Button href={SITE.substack.home} variant="secondary">Open on Substack</Button>
+    </div>
+  </PageHeader>
+
+  <section aria-labelledby="issues-heading" class="container-page py-20 md:py-28">
+    <h2 id="issues-heading" class="label text-signal-text">All issues · {posts.length}</h2>
+    {
+      posts.length > 0 ? (
+        <ul class="mt-8 grid gap-6 md:grid-cols-2">
+          {posts.map((post) => (
+            <li>
+              <PostCard post={post} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="mt-8 text-body text-muted">
+          Read every issue on{' '}
+          <a href={SITE.substack.home} class="text-signal-text underline underline-offset-4">
+            Substack
+          </a>
+          .
+        </p>
+      )
+    }
+  </section>
+</BaseLayout>
