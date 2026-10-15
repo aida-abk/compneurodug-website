@@ -111,7 +111,7 @@ Work one phase at a time and stop after each for Aida to review in the browser.
 
 ## Open items
 
-- Headshots: which photo belongs to whom (none attached yet); Ah-Young has no photo listed
+- Headshots: Nhi, Cal, Tiger and Aida done (square crops in src/assets/team). Ah-Young's photo still needed as a file.
 - Resources: starter entries are real, verified links (Neuromatch, Neuronal Dynamics, Dayan & Abbott, Carney, UTRA, Neuroscience concentration) chosen by Claude; Aida to review. Brown course entries still needed (one draft placeholder).
 - Copy is deliberately short (Oct 2026 trim): one line per intro, no paragraph beside section titles unless it is an instruction. Keep it that way; detail belongs in guides.
 - Course plan worksheet and Honors application links for the declaration guide (not found publicly)
