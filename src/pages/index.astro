@@ -1,20 +1,80 @@
 ---
-import '../styles/global.css';
+// Phase 2 preview: base layout plus a token specimen for review.
+// Replaced by the real homepage in phase 3.
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const colors = [
+  { name: 'Field', token: 'field', cls: 'bg-field', note: 'Main background' },
+  { name: 'Surface', token: 'surface', cls: 'bg-surface', note: 'Cards, secondary backgrounds' },
+  { name: 'Structure', token: 'structure', cls: 'bg-structure', note: 'Logo lines, drawings' },
+  { name: 'Signal', token: 'signal', cls: 'bg-signal', note: 'Mark, shapes, buttons' },
+  { name: 'Ink', token: 'ink', cls: 'bg-ink', note: 'Main text' },
+  { name: 'Muted', token: 'muted', cls: 'bg-muted', note: 'Secondary text' },
+  { name: 'Signal Text', token: 'signal-text', cls: 'bg-signal-text', note: 'Labels, links' },
+  { name: 'Signal Display', token: 'signal-display', cls: 'bg-signal-display', note: 'Coral headlines 24px+' },
+  { name: 'Rule', token: 'rule', cls: 'bg-rule', note: 'Dividers, borders' },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Computational Neuroscience DUG | Brown University</title>
-	</head>
-	<body>
-		<main>
-			<h1>Computational Neuroscience DUG</h1>
-			<p>Phase 1 scaffold. Layout and design arrive in phase 2.</p>
-		</main>
-	</body>
-</html>
+<BaseLayout title="Design tokens">
+  <section class="container-page py-16 md:py-24">
+    <p class="label text-signal-text">Phase 2 · Design tokens</p>
+    <h1 class="mt-4 text-display text-ink">Neural</h1>
+    <p class="mt-6 max-w-2xl text-body text-muted">
+      A preview of the type scale and colors from the Figma brand board, inside the base layout. The real homepage
+      replaces this page in phase 3.
+    </p>
+  </section>
+
+  <section class="container-page border-t border-rule py-16" aria-labelledby="type-heading">
+    <h2 id="type-heading" class="label text-signal-text">Type scale</h2>
+    <dl class="mt-8 divide-y divide-rule border-y border-rule">
+      <div class="grid gap-2 py-6 md:grid-cols-12 md:items-baseline">
+        <dt class="label text-muted md:col-span-3">Display · Newsreader</dt>
+        <dd class="font-serif text-display font-medium md:col-span-9">Neural</dd>
+      </div>
+      <div class="grid gap-2 py-6 md:grid-cols-12 md:items-baseline">
+        <dt class="label text-muted md:col-span-3">H1 · Newsreader</dt>
+        <dd class="font-serif text-h1 font-medium md:col-span-9">Upcoming events</dd>
+      </div>
+      <div class="grid gap-2 py-6 md:grid-cols-12 md:items-baseline">
+        <dt class="label text-muted md:col-span-3">H2 · Newsreader</dt>
+        <dd class="font-serif text-h2 font-medium md:col-span-9">Journal club</dd>
+      </div>
+      <div class="grid gap-2 py-6 md:grid-cols-12 md:items-baseline">
+        <dt class="label text-muted md:col-span-3">H3 · DM Sans</dt>
+        <dd class="text-h3 font-medium md:col-span-9">Thursday sessions</dd>
+      </div>
+      <div class="grid gap-2 py-6 md:grid-cols-12 md:items-baseline">
+        <dt class="label text-muted md:col-span-3">Body · DM Sans</dt>
+        <dd class="text-body md:col-span-9">We read one paper a week and talk about it.</dd>
+      </div>
+      <div class="grid gap-2 py-6 md:grid-cols-12 md:items-baseline">
+        <dt class="label text-muted md:col-span-3">Small · DM Sans</dt>
+        <dd class="text-small md:col-span-9">Last updated October 2026</dd>
+      </div>
+      <div class="grid gap-2 py-6 md:grid-cols-12 md:items-baseline">
+        <dt class="label text-muted md:col-span-3">Label · DM Mono</dt>
+        <dd class="label md:col-span-9">Events · Research</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="container-page border-t border-rule py-16" aria-labelledby="color-heading">
+    <h2 id="color-heading" class="label text-signal-text">Color</h2>
+    <ul class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      {
+        colors.map((c) => (
+          <li class="overflow-hidden rounded-sm border border-rule bg-surface">
+            <div class:list={['h-20 border-b border-rule', c.cls]} />
+            <div class="p-4">
+              <p class="font-serif text-h3 font-medium">{c.name}</p>
+              <p class="mt-1 font-mono text-label text-muted">--color-{c.token}</p>
+              <p class="mt-2 text-small text-muted">{c.note}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

@@ -1,0 +1,119 @@
+/*
+ * Design tokens — the only place raw values live.
+ * Source of truth: Figma brand board (file T6DcLXl6cROcY86o2LpNv7),
+ * variables "DUG / …" on frames 04 Color (5:136) and 05 Typography (5:242).
+ * Components never use these directly; use the Tailwind utilities that
+ * global.css maps onto them (bg-field, text-display, font-serif, …).
+ */
+
+:root {
+  /* ---- Color: core ---- */
+  --dug-field: #e8e1d9; /* Main background */
+  --dug-surface: #f5f1ec; /* Cards, secondary backgrounds */
+  --dug-structure: #243b3a; /* Logo lines, line drawings */
+  --dug-signal: #e36f47; /* Mark, shapes, buttons — never small text */
+
+  /* ---- Color: text and lines ---- */
+  --dug-ink: #172827; /* Main text — 11.8:1 on Field */
+  --dug-muted: #55625e; /* Secondary text — 4.9:1 on Field */
+  --dug-signal-text: #a9432a; /* Coral labels and links, any size — 4.6:1 */
+  --dug-signal-display: #c95b37; /* Coral headlines, 24px and up only — 3.2:1 */
+  --dug-rule: #c9c1b7; /* Dividers, borders */
+
+  /* ---- Font families ---- */
+  --dug-font-serif: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
+  --dug-font-sans: 'DM Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --dug-font-mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ---- Type scale: Web (mobile values first, desktop below) ----
+   * Figma "DUG / Web Desktop / …". Sizes in rem (16px base).
+   */
+  --dug-display-size: 3rem; /* 48 */
+  --dug-display-leading: 3.125rem; /* 50 */
+  --dug-display-tracking: -0.03em;
+
+  --dug-h1-size: 2.25rem; /* 36 */
+  --dug-h1-leading: 2.5rem; /* 40 */
+  --dug-h1-tracking: -0.02em;
+
+  --dug-h2-size: 1.75rem; /* 28 */
+  --dug-h2-leading: 2.125rem; /* 34 */
+  --dug-h2-tracking: -0.01em;
+
+  --dug-h3-size: 1.25rem; /* 20 */
+  --dug-h3-leading: 1.625rem; /* 26 */
+
+  --dug-body-size: 1rem; /* 16 */
+  --dug-body-leading: 1.5rem; /* 24 */
+
+  --dug-small-size: 0.875rem; /* 14 */
+  --dug-small-leading: 1.25rem; /* 20 */
+
+  --dug-label-size: 0.75rem; /* 12 */
+  --dug-label-leading: 1rem; /* 16 */
+  --dug-label-tracking: 0.12em;
+
+  /* Logo lockup type (from Logo / Lockup, scaled for the web header) */
+  --dug-lockup-name-size: 1.25rem; /* 20 */
+  --dug-lockup-name-leading: 1.5rem; /* 24 */
+  --dug-lockup-name-tracking: -0.01em;
+  --dug-lockup-sub-size: 0.625rem; /* 10 */
+  --dug-lockup-sub-leading: 0.875rem; /* 14 */
+
+  --dug-weight-regular: 400;
+  --dug-weight-medium: 500;
+
+  /* ---- Layout ---- */
+  --dug-spacing: 0.25rem; /* Tailwind spacing unit: p-4 = 1rem */
+  --dug-content-max: 80rem; /* 1280 — Figma content width */
+  --dug-gutter: 1.25rem; /* 20 mobile; 80 desktop below */
+  --dug-nav-height: 4.5rem; /* 72 */
+  --dug-mark-nav: 2.5rem; /* 40 — Compact mark, 32–96px range */
+  --dug-mark-footer: 3rem; /* 48 */
+  --dug-rule-width: 1px;
+  --dug-radius: 0.25rem; /* 4 — subtle, Notion-like */
+  --dug-focus-width: 2px;
+  --dug-focus-offset: 3px;
+
+  /* ---- Motion ---- */
+  --dug-duration-fast: 150ms;
+  --dug-duration-base: 250ms;
+  --dug-ease-out: cubic-bezier(0.22, 0.78, 0.3, 1); /* From animated logo */
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --dug-display-size: 5.5rem; /* 88 */
+    --dug-display-leading: 5.5rem; /* 88 */
+
+    --dug-h1-size: 3.5rem; /* 56 */
+    --dug-h1-leading: 3.75rem; /* 60 */
+
+    --dug-h2-size: 2.25rem; /* 36 */
+    --dug-h2-leading: 2.625rem; /* 42 */
+
+    --dug-h3-size: 1.5rem; /* 24 */
+    --dug-h3-leading: 1.875rem; /* 30 */
+
+    --dug-body-size: 1.125rem; /* 18 */
+    --dug-body-leading: 1.75rem; /* 28 */
+
+    --dug-small-size: 0.9375rem; /* 15 */
+    --dug-small-leading: 1.375rem; /* 22 */
+
+    --dug-gutter: 2.5rem; /* 40 tablet */
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --dug-gutter: 5rem; /* 80 */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dug-duration-fast: 0ms;
+    --dug-duration-base: 0ms;
+  }
+}

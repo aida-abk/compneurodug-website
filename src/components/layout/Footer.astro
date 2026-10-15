@@ -1,0 +1,53 @@
+---
+import Lockup from './Lockup.astro';
+import { NAV_LINKS, SITE } from '../../lib/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-auto border-t border-rule bg-surface">
+  <div class="container-page grid gap-12 py-16 md:grid-cols-12 md:gap-6">
+    <div class="md:col-span-6">
+      <Lockup markClass="size-mark-footer" />
+      <p class="mt-6 max-w-md text-small text-muted">
+        The {SITE.name.formal} at {SITE.university}. Talks, journal club, research and community at the
+        intersection of brains and computation.
+      </p>
+    </div>
+
+    <nav aria-label="Footer" class="md:col-span-3">
+      <h2 class="label text-signal-text">Explore</h2>
+      <ul class="mt-4 space-y-2">
+        <li><a href="/" class="text-small text-ink hover:text-signal-text">Home</a></li>
+        {
+          NAV_LINKS.map(({ href, label }) => (
+            <li>
+              <a href={href} class="text-small text-ink hover:text-signal-text">
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="md:col-span-3">
+      <h2 class="label text-signal-text">Follow</h2>
+      <ul class="mt-4 space-y-2">
+        <li>
+          <a href={SITE.substack.home} class="text-small text-ink hover:text-signal-text">Substack newsletter</a>
+        </li>
+        <li>
+          <a href={SITE.substack.subscribe} class="text-small text-ink hover:text-signal-text">Subscribe by email</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-rule">
+    <div class="container-page flex flex-col gap-2 py-6 sm:flex-row sm:items-center sm:justify-between">
+      <p class="label text-muted">© {year} {SITE.name.standard}</p>
+      <p class="label text-muted">{SITE.university} · Providence, RI</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,28 @@
+---
+// Logo / Lockup (Figma 3:144). Horizontal on wide screens, Short below 640px
+// (the horizontal lockup's minimum width is 320px).
+import LogoMark from '../ui/LogoMark.astro';
+import { SITE } from '../../lib/site';
+
+interface Props {
+  class?: string;
+  markClass?: string;
+}
+
+const { class: className, markClass = 'size-mark-nav' } = Astro.props;
+---
+
+<span class:list={['flex items-center gap-3 sm:gap-4', className]}>
+  <LogoMark class:list={['shrink-0', markClass]} />
+  <span class="hidden h-10 w-px shrink-0 bg-rule sm:block" aria-hidden="true"></span>
+  <span class="flex flex-col">
+    <span class="font-serif text-lockup-name font-medium text-ink">
+      <span class="sm:hidden">{SITE.name.short}</span>
+      <span class="hidden sm:inline">Computational Neuroscience</span>
+    </span>
+    <span class="hidden font-mono text-lockup-sub font-medium uppercase text-signal-text sm:block">
+      Departmental Undergraduate Group
+    </span>
+    <span class="hidden font-mono text-lockup-sub uppercase text-muted sm:block">{SITE.university}</span>
+  </span>
+</span>

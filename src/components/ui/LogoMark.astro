@@ -1,0 +1,52 @@
+---
+// Logo / Mark from the Figma assets page (3:94). Geometry is copied from the
+// Figma components, not redrawn: Compact (3:66) and Favicon (3:82).
+// Compact: 32–96px. Favicon: under 32px. Decorative by default — pair it with
+// visible text, or pass `title` when it stands alone.
+interface Props {
+  variant?: 'compact' | 'favicon';
+  class?: string;
+  title?: string;
+}
+
+const { variant = 'compact', class: className, title } = Astro.props;
+const labelled = Boolean(title);
+---
+
+{
+  variant === 'compact' ? (
+    <svg
+      viewBox="0 0 180 180"
+      class={className}
+      role={labelled ? 'img' : undefined}
+      aria-hidden={labelled ? undefined : 'true'}
+      focusable="false"
+    >
+      {title && <title>{title}</title>}
+      <rect class="fill-none stroke-structure" x="26.1" y="26.1" width="127.8" height="127.8" stroke-width="9" />
+      <rect
+        class="fill-none stroke-structure"
+        stroke-opacity="0.7"
+        x="32.82"
+        y="50.9"
+        width="95.4"
+        height="95.4"
+        stroke-width="9"
+        transform="rotate(13 80.52 98.6)"
+      />
+      <rect class="fill-signal" x="61.87" y="78.29" width="45" height="45" transform="rotate(29 84.37 100.79)" />
+    </svg>
+  ) : (
+    <svg
+      viewBox="0 0 64 64"
+      class={className}
+      role={labelled ? 'img' : undefined}
+      aria-hidden={labelled ? undefined : 'true'}
+      focusable="false"
+    >
+      {title && <title>{title}</title>}
+      <rect class="fill-none stroke-structure" x="10.24" y="10.24" width="43.52" height="43.52" stroke-width="6.4" />
+      <rect class="fill-signal" x="20.48" y="20.48" width="23.04" height="23.04" transform="rotate(29 32 32)" />
+    </svg>
+  )
+}

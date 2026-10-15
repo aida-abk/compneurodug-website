@@ -34,7 +34,11 @@ Before finishing any phase, `npm run build` and `npx astro check` both pass.
 
 - Every color, font, font size, line height, spacing step, radius and duration comes from a CSS variable defined in `src/styles/tokens.css` and exposed to Tailwind via `@theme` in `src/styles/global.css`.
 - Never hard-code hex values, px sizes or font names in components or Tailwind arbitrary values (`text-[#172827]`, `p-[13px]` are not allowed). If a value is missing, add a token first.
-- Token names follow the Figma variables (`DUG / Field` → `--color-field`). Figma is the source of truth; if they disagree, ask Aida.
+- Token names follow the Figma variables (`DUG / Field` → `--dug-field` → Tailwind `bg-field`). Figma is the source of truth; if they disagree, ask Aida.
+- `global.css` clears Tailwind's default colors, fonts, weights, type sizes and radii, so only brand utilities exist: colors `field surface structure signal ink muted signal-text signal-display rule`; type `text-display text-h1 text-h2 text-h3 text-body text-small text-label`; fonts `font-serif font-sans font-mono`; plus `container-page` and `label` utilities. Type tokens switch from mobile to desktop values at 48rem.
+- The one exception: `public/favicon.svg` carries raw hex, because browsers can't read CSS variables there. Keep it in sync with `tokens.css`.
+- Logo: `src/components/ui/LogoMark.astro` copies the Figma component geometry (Compact 3:66, Favicon 3:82). Never redraw, recolor or rotate it.
+- Brown and Carney logos need written approval before use (Figma 03). Don't add them until Aida confirms.
 
 ## Motion rules
 
@@ -87,7 +91,7 @@ public/         Files served as-is (favicons, OG images, static fallbacks)
 Work one phase at a time and stop after each for Aida to review in the browser.
 
 1. Scaffold, git, CLAUDE.md — done
-2. Design tokens, fonts, base layout (nav + footer)
+2. Design tokens, fonts, base layout (nav + footer) — done
 3. Homepage as static layout, no animation
 4. 3D hero
 5. Scroll-traced line drawings

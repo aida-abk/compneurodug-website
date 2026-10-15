@@ -1,0 +1,109 @@
+---
+import Lockup from './Lockup.astro';
+import { NAV_LINKS, SITE } from '../../lib/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+
+<header class="sticky top-0 z-50 border-b border-rule bg-field">
+  <nav aria-label="Main" class="container-page flex h-nav items-center justify-between gap-6">
+    <a href="/" class="-m-1 rounded-sm p-1" aria-label={`${SITE.name.standard}, home`}>
+      <Lockup />
+    </a>
+
+    <ul class="hidden items-center gap-1 lg:flex">
+      {
+        NAV_LINKS.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              aria-current={isCurrent(href) ? 'page' : undefined}
+              class="rounded-sm px-3 py-2 text-small text-muted transition-colors hover:bg-surface hover:text-ink aria-[current=page]:text-ink aria-[current=page]:underline aria-[current=page]:decoration-signal aria-[current=page]:underline-offset-8"
+            >
+              {label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="ml-3">
+        <a
+          href={SITE.substack.subscribe}
+          class="inline-flex items-center rounded-sm bg-signal px-4 py-2 text-small font-medium text-ink transition-opacity hover:opacity-90"
+        >
+          Subscribe
+        </a>
+      </li>
+    </ul>
+
+    <button
+      type="button"
+      class="-mr-2 inline-flex items-center gap-2 rounded-sm px-2 py-2 label text-ink lg:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      data-menu-toggle
+    >
+      <span data-menu-label>Menu</span>
+      <svg viewBox="0 0 16 16" class="size-4" aria-hidden="true" focusable="false">
+        <path class="stroke-current" d="M2 5h12M2 11h12" stroke-width="1.5" fill="none" data-menu-icon-closed></path>
+        <path class="hidden stroke-current" d="M3 3l10 10M13 3L3 13" stroke-width="1.5" fill="none" data-menu-icon-open></path>
+      </svg>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="border-t border-rule bg-field lg:hidden" hidden>
+    <ul class="container-page flex flex-col py-4">
+      {
+        NAV_LINKS.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              aria-current={isCurrent(href) ? 'page' : undefined}
+              class="block border-b border-rule py-4 font-serif text-h2 text-ink aria-[current=page]:text-signal-display"
+            >
+              {label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="pt-6">
+        <a
+          href={SITE.substack.subscribe}
+          class="inline-flex items-center rounded-sm bg-signal px-4 py-3 text-body font-medium text-ink"
+        >
+          Subscribe to the newsletter
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.getElementById('mobile-menu');
+
+  if (toggle && menu) {
+    const label = toggle.querySelector('[data-menu-label]');
+    const iconOpen = toggle.querySelector('[data-menu-icon-open]');
+    const iconClosed = toggle.querySelector('[data-menu-icon-closed]');
+
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+      if (label) label.textContent = open ? 'Close' : 'Menu';
+      iconOpen?.classList.toggle('hidden', !open);
+      iconClosed?.classList.toggle('hidden', open);
+    };
+
+    toggle.addEventListener('click', () => setOpen(menu.hidden === true));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menu.hidden === false) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    window.matchMedia('(min-width: 64rem)').addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
+  }
+</script>

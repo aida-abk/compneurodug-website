@@ -1,1 +1,133 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import './tokens.css';
+
+/*
+ * Map design tokens onto Tailwind. Tailwind's default palette, fonts and
+ * type sizes are cleared so only brand tokens exist as utilities —
+ * `bg-blue-500` or `text-xl` will not compile to anything.
+ */
+@theme inline {
+  --color-*: initial;
+  --color-field: var(--dug-field);
+  --color-surface: var(--dug-surface);
+  --color-structure: var(--dug-structure);
+  --color-signal: var(--dug-signal);
+  --color-ink: var(--dug-ink);
+  --color-muted: var(--dug-muted);
+  --color-signal-text: var(--dug-signal-text);
+  --color-signal-display: var(--dug-signal-display);
+  --color-rule: var(--dug-rule);
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-*: initial;
+  --font-serif: var(--dug-font-serif);
+  --font-sans: var(--dug-font-sans);
+  --font-mono: var(--dug-font-mono);
+
+  --font-weight-*: initial;
+  --font-weight-regular: var(--dug-weight-regular);
+  --font-weight-medium: var(--dug-weight-medium);
+
+  --text-*: initial;
+  --text-display: var(--dug-display-size);
+  --text-display--line-height: var(--dug-display-leading);
+  --text-display--letter-spacing: var(--dug-display-tracking);
+  --text-h1: var(--dug-h1-size);
+  --text-h1--line-height: var(--dug-h1-leading);
+  --text-h1--letter-spacing: var(--dug-h1-tracking);
+  --text-h2: var(--dug-h2-size);
+  --text-h2--line-height: var(--dug-h2-leading);
+  --text-h2--letter-spacing: var(--dug-h2-tracking);
+  --text-h3: var(--dug-h3-size);
+  --text-h3--line-height: var(--dug-h3-leading);
+  --text-body: var(--dug-body-size);
+  --text-body--line-height: var(--dug-body-leading);
+  --text-small: var(--dug-small-size);
+  --text-small--line-height: var(--dug-small-leading);
+  --text-label: var(--dug-label-size);
+  --text-label--line-height: var(--dug-label-leading);
+  --text-label--letter-spacing: var(--dug-label-tracking);
+  --text-lockup-name: var(--dug-lockup-name-size);
+  --text-lockup-name--line-height: var(--dug-lockup-name-leading);
+  --text-lockup-name--letter-spacing: var(--dug-lockup-name-tracking);
+  --text-lockup-sub: var(--dug-lockup-sub-size);
+  --text-lockup-sub--line-height: var(--dug-lockup-sub-leading);
+  --text-lockup-sub--letter-spacing: var(--dug-label-tracking);
+
+  --spacing: var(--dug-spacing);
+  --spacing-nav: var(--dug-nav-height);
+  --spacing-mark-nav: var(--dug-mark-nav);
+  --spacing-mark-footer: var(--dug-mark-footer);
+
+  --radius-*: initial;
+  --radius-sm: var(--dug-radius);
+
+  --ease-out: var(--dug-ease-out);
+  --default-transition-duration: var(--dug-duration-base);
+  --default-transition-timing-function: var(--dug-ease-out);
+}
+
+/* Page container: 1280 content width with responsive gutters. */
+@utility container-page {
+  width: 100%;
+  max-width: calc(var(--dug-content-max) + 2 * var(--dug-gutter));
+  margin-inline: auto;
+  padding-inline: var(--dug-gutter);
+}
+
+/* Small caps label — DM Mono Medium, +12% tracking. */
+@utility label {
+  font-family: var(--dug-font-mono);
+  font-weight: var(--dug-weight-medium);
+  font-size: var(--dug-label-size);
+  line-height: var(--dug-label-leading);
+  letter-spacing: var(--dug-label-tracking);
+  text-transform: uppercase;
+}
+
+@layer base {
+  html {
+    background-color: var(--dug-field);
+    color: var(--dug-ink);
+    font-family: var(--dug-font-sans);
+    font-size: 100%;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: var(--dug-nav-height);
+  }
+
+  body {
+    min-height: 100dvh;
+    font-size: var(--dug-body-size);
+    line-height: var(--dug-body-leading);
+  }
+
+  h1,
+  h2 {
+    font-family: var(--dug-font-serif);
+    font-weight: var(--dug-weight-medium);
+  }
+
+  ::selection {
+    background-color: var(--dug-signal);
+    color: var(--dug-ink);
+  }
+
+  :focus-visible {
+    outline: var(--dug-focus-width) solid var(--dug-signal-text);
+    outline-offset: var(--dug-focus-offset);
+    border-radius: var(--dug-radius);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
