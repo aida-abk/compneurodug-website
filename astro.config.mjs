@@ -13,7 +13,13 @@ export default defineConfig({
   integrations: [react(), sitemap(), mdx()],
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    // Pre-bundle the lazily imported motion libraries at dev-server start.
+    // Otherwise Vite discovers them on first import, re-optimizes, and the
+    // page can request a stale copy (504 "Outdated Optimize Dep").
+    optimizeDeps: {
+      include: ['three', 'gsap', 'gsap/ScrollTrigger', 'gsap/DrawSVGPlugin', 'lenis']
+    }
   },
 
   adapter: vercel()

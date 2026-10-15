@@ -85,8 +85,10 @@
 
 @media (min-width: 48rem) {
   :root {
-    --dug-display-size: 5.5rem; /* 88 */
-    --dug-display-leading: 5.5rem; /* 88 */
+    /* Fluid between tablet and the 1440 Figma frame, so long words like
+       "Computational" fit the hero's text column: 56px at 768 → 88px at 1440. */
+    --dug-display-size: clamp(3.5rem, 1.25rem + 4.7vw, 5.5rem);
+    --dug-display-leading: 1;
 
     --dug-h1-size: 3.5rem; /* 56 */
     --dug-h1-leading: 3.75rem; /* 60 */
