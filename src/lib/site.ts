@@ -9,7 +9,7 @@ export const SITE = {
   },
   university: 'Brown University',
   description:
-    'The Computational Neuroscience Departmental Undergraduate Group at Brown University: talks, journal club, research and community at the intersection of brains and computation.',
+    'The Computational Neuroscience Departmental Undergraduate Group at Brown University: talks, advising, research and community at the intersection of brains and computation.',
   email: 'compneurodug@brown.edu',
   // Advising board on Ed, moderated by Prof. David Sheinberg.
   ed: 'https://edstem.org/us/join/JaEjcM',
