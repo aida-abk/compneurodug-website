@@ -134,3 +134,64 @@
     }
   }
 }
+
+/* Long-form Markdown (event descriptions, guides). Tokens only. */
+@layer components {
+  .prose-dug {
+    color: var(--dug-ink);
+    font-size: var(--dug-body-size);
+    line-height: var(--dug-body-leading);
+    max-width: 42rem;
+  }
+  .prose-dug > * + * {
+    margin-top: 1.25em;
+  }
+  .prose-dug h2 {
+    margin-top: 2.5em;
+    font-family: var(--dug-font-serif);
+    font-weight: var(--dug-weight-medium);
+    font-size: var(--dug-h2-size);
+    line-height: var(--dug-h2-leading);
+    letter-spacing: var(--dug-h2-tracking);
+  }
+  .prose-dug h3 {
+    margin-top: 2em;
+    font-size: var(--dug-h3-size);
+    line-height: var(--dug-h3-leading);
+    font-weight: var(--dug-weight-medium);
+  }
+  .prose-dug a {
+    color: var(--dug-signal-text);
+    text-decoration: underline;
+    text-decoration-color: var(--dug-rule);
+    text-underline-offset: 0.25em;
+  }
+  .prose-dug a:hover {
+    text-decoration-color: var(--dug-signal-text);
+  }
+  .prose-dug ul,
+  .prose-dug ol {
+    padding-left: 1.5em;
+  }
+  .prose-dug ul {
+    list-style: disc;
+  }
+  .prose-dug ol {
+    list-style: decimal;
+  }
+  .prose-dug li + li {
+    margin-top: 0.75em;
+  }
+  .prose-dug li::marker {
+    color: var(--dug-signal-text);
+    font-family: var(--dug-font-mono);
+  }
+  .prose-dug strong {
+    font-weight: var(--dug-weight-medium);
+  }
+  .prose-dug blockquote {
+    border-left: var(--dug-rule-width) solid var(--dug-signal);
+    padding-left: 1.25em;
+    color: var(--dug-muted);
+  }
+}

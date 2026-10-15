@@ -1,0 +1,75 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/ui/Button.astro';
+import { getEvents, EVENT_TYPE_LABELS, type Event } from '../../lib/events';
+import { formatLongDate, formatTime } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const events = await getEvents();
+  return events.map((event) => ({ params: { slug: event.id }, props: { event } }));
+}
+
+interface Props {
+  event: Event;
+}
+
+const { event } = Astro.props;
+const { data } = event;
+const { Content } = await render(event);
+const isPast = (data.endDate ?? data.date) < new Date();
+const time = data.endDate ? `${formatTime(data.date)} – ${formatTime(data.endDate)}` : formatTime(data.date);
+---
+
+<BaseLayout title={data.title} description={data.summary}>
+  <article>
+    <header class="border-b border-rule">
+      <div class="container-page py-16 md:py-24">
+        <a href="/events" class="label text-muted hover:text-ink">← All events</a>
+        <p class="mt-10 label text-signal-text">
+          {EVENT_TYPE_LABELS[data.type]}
+          {data.draft && <span class="ml-2 text-muted">· Draft</span>}
+          {isPast && <span class="ml-2 text-muted">· Past event</span>}
+        </p>
+        <h1 class="mt-6 max-w-4xl text-h1 text-ink">{data.title}</h1>
+      </div>
+    </header>
+
+    <div class="container-page grid gap-12 py-16 md:py-20 lg:grid-cols-12 lg:gap-6">
+      <aside class="lg:col-span-4" aria-label="Event details">
+        <dl class="divide-y divide-rule border-y border-rule">
+          <div class="grid grid-cols-3 gap-4 py-4">
+            <dt class="label text-muted">Date</dt>
+            <dd class="col-span-2 text-small text-ink">
+              <time datetime={data.date.toISOString()}>{formatLongDate(data.date)}</time>
+            </dd>
+          </div>
+          <div class="grid grid-cols-3 gap-4 py-4">
+            <dt class="label text-muted">Time</dt>
+            <dd class="col-span-2 text-small text-ink">{time}</dd>
+          </div>
+          <div class="grid grid-cols-3 gap-4 py-4">
+            <dt class="label text-muted">Where</dt>
+            <dd class="col-span-2 text-small text-ink">{data.location}</dd>
+          </div>
+        </dl>
+        {
+          !isPast && (data.rsvp || data.link) && (
+            <div class="mt-8 flex flex-wrap gap-3">
+              {data.rsvp && <Button href={data.rsvp}>RSVP</Button>}
+              {data.link && (
+                <Button href={data.link} variant="secondary">
+                  Event page
+                </Button>
+              )}
+            </div>
+          )
+        }
+      </aside>
+
+      <div class="prose-dug lg:col-span-7 lg:col-start-6">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

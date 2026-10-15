@@ -14,6 +14,9 @@ const events = defineCollection({
     location: z.string(),
     type: z.enum(['talk', 'journal-club', 'social', 'workshop', 'other']),
     summary: z.string(),
+    // Sign-up form (Google Form etc.). Shows an RSVP button.
+    rsvp: z.url().optional(),
+    // External page for the event, if any.
     link: z.url().optional(),
     draft: z.boolean().default(false),
   }),
@@ -41,7 +44,7 @@ const resources = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/resources' }),
   schema: z.object({
     title: z.string(),
-    category: z.enum(['courses', 'research', 'reading']),
+    category: z.enum(['concentration', 'advising', 'courses', 'research', 'reading']),
     summary: z.string(),
     url: z.url().optional(),
     order: z.number().int().default(0),
@@ -49,4 +52,16 @@ const resources = defineCollection({
   }),
 });
 
-export const collections = { events, members, resources };
+// Long-form how-to pages, rendered at /resources/<file-name>.
+const guides = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/guides' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    order: z.number().int().default(0),
+    updated: z.coerce.date().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { events, members, resources, guides };

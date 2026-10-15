@@ -1,0 +1,46 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDateOnly } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides', (g) => import.meta.env.DEV || !g.data.draft);
+  return guides.map((guide) => ({ params: { slug: guide.id }, props: { guide } }));
+}
+
+interface Props {
+  guide: CollectionEntry<'guides'>;
+}
+
+const { guide } = Astro.props;
+const { data } = guide;
+const { Content } = await render(guide);
+---
+
+<BaseLayout title={data.title} description={data.summary}>
+  <article>
+    <header class="border-b border-rule">
+      <div class="container-page py-16 md:py-24">
+        <a href="/resources" class="label text-muted hover:text-ink">← Resources</a>
+        <p class="mt-10 label text-signal-text">
+          Guide
+          {data.draft && <span class="ml-2 text-muted">· Draft</span>}
+        </p>
+        <h1 class="mt-6 max-w-4xl text-h1 text-ink">{data.title}</h1>
+        <p class="mt-6 max-w-2xl text-body text-muted">{data.summary}</p>
+        {
+          data.updated && (
+            <p class="mt-8 label text-muted">
+              Updated <time datetime={data.updated.toISOString()}>{formatDateOnly(data.updated)}</time>
+            </p>
+          )
+        }
+      </div>
+    </header>
+    <div class="container-page py-16 md:py-20">
+      <div class="prose-dug mx-auto">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

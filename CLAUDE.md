@@ -78,16 +78,19 @@ src/
   content/
     events/     One .md per event
     members/    One .md per team member (photos alongside or in src/assets)
-    resources/  One .md per resource
+    resources/  One .md per resource link (category: concentration, advising, courses, research, reading)
+    guides/     One .md per long-form guide, rendered at /resources/<file-name>
   content.config.ts  Collection schemas — the contract for content files
   layouts/      Base page layout(s)
   lib/          Plain TS helpers (motion/ holds trace.ts and smooth-scroll.ts): site.ts (names, links, nav), events.ts, substack.ts (RSS at build time), format.ts (dates in America/New_York)
-  pages/        Routes: index, about, events, resources, newsletter, 404
+  pages/        Routes: index, about, events, events/[slug], resources, resources/[slug] (guides), newsletter, 404
   styles/       tokens.css (variables), global.css (Tailwind + @theme)
 public/         Files served as-is (favicons, OG images, static fallbacks)
 ```
 
 - Components: PascalCase filenames (`EventCard.astro`). Content files: kebab-case slugs (`2026-10-30-journal-club.md`).
+- Events: one file per event named `YYYY-MM-DD-short-name.md`; the file name becomes the URL (`/events/<name>`). Frontmatter holds the listing fields (`rsvp` shows an RSVP button); the Markdown body is the "About the event" text. Times carry their UTC offset (`-04:00` EDT, `-05:00` EST).
+- Date-only fields (like a guide's `updated`) are formatted in UTC with `formatDateOnly`; date-times use Providence time.
 - Content files with `draft: true` show in `npm run dev` (marked "Draft") and never in a production build. Placeholder entries stay drafts until Aida supplies real content.
 - The Substack feed is fetched at build time by `src/lib/substack.ts`; if it fails, the build continues with a link to Substack instead.
 - Line drawings are inline SVG in `src/components/figures/`: single weight, `stroke-structure`, `vector-effect="non-scaling-stroke"`. Don't add `pathLength` (it breaks DrawSVG). Tracing markup: `data-trace-group="outline"` (children draw first), then `data-trace-group="annotation"` groups in order, containing `data-trace-draw` strokes and `data-trace-reveal` elements. See `src/lib/motion/trace.ts`. The homepage brain (`BrainMap.astro`) maps DUG functions to regions: Advising → auditory cortex, Connecting with faculty → arcuate fasciculus, Building community → temporoparietal junction, Flavours of comp neuro → visual cortex. Region ids must match `REGIONS` in `WhatWeDo.astro`. `PyramidalNeuron.astro` is reserved for the About page.
@@ -110,4 +113,5 @@ Work one phase at a time and stop after each for Aida to review in the browser.
 - Headshots: which photo belongs to whom (none attached yet); Ah-Young has no photo listed
 - Resources: starter entries are real, verified links (Neuromatch, Neuronal Dynamics, Dayan & Abbott, Carney, UTRA, Neuroscience concentration) chosen by Claude; Aida to review. Brown course entries still needed (one draft placeholder).
 - Copy on About and the homepage is draft.
-- Real events
+- Course plan worksheet and Honors application links for the declaration guide (not found publicly)
+- How co-leaders publish events (pending Aida's choice of editing workflow)
