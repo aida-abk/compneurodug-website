@@ -1,25 +1,35 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { eventsFeedLoader } from './lib/events-feed';
 
 // One Markdown file per entry. Co-leaders edit these files, not components.
-// Entries with `draft: true` are never shown on the site.
+// Entries with `draft: true` show in `npm run dev` only, never on the live site.
 
+const eventSchema = z.object({
+  title: z.string(),
+  date: z.coerce.date(),
+  endDate: z.coerce.date().optional(),
+  location: z.string(),
+  type: z.enum(['talk', 'journal-club', 'social', 'workshop', 'other']),
+  summary: z.string(),
+  // Sign-up form (Google Form etc.). Shows an RSVP button.
+  rsvp: z.url().optional(),
+  // External page for the event, if any.
+  link: z.url().optional(),
+  draft: z.boolean().default(false),
+});
+
+// Events come from two places with the same shape: Markdown files, and the
+// Google Form (via the Apps Script feed). src/lib/events.ts merges them.
 const events = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/events' }),
-  schema: z.object({
-    title: z.string(),
-    date: z.coerce.date(),
-    endDate: z.coerce.date().optional(),
-    location: z.string(),
-    type: z.enum(['talk', 'journal-club', 'social', 'workshop', 'other']),
-    summary: z.string(),
-    // Sign-up form (Google Form etc.). Shows an RSVP button.
-    rsvp: z.url().optional(),
-    // External page for the event, if any.
-    link: z.url().optional(),
-    draft: z.boolean().default(false),
-  }),
+  schema: eventSchema,
+});
+
+const formEvents = defineCollection({
+  loader: eventsFeedLoader(),
+  schema: eventSchema,
 });
 
 const members = defineCollection({
@@ -43,7 +53,7 @@ const members = defineCollection({
 const resources = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/resources' }),
   schema: z.object({
-    title: z.string(),
+  title: z.string(),
     category: z.enum(['concentration', 'advising', 'courses', 'research', 'reading']),
     summary: z.string(),
     url: z.url().optional(),
@@ -56,7 +66,7 @@ const resources = defineCollection({
 const guides = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/guides' }),
   schema: z.object({
-    title: z.string(),
+  title: z.string(),
     summary: z.string(),
     order: z.number().int().default(0),
     updated: z.coerce.date().optional(),
@@ -64,4 +74,4 @@ const guides = defineCollection({
   }),
 });
 
-export const collections = { events, members, resources, guides };
+export const collections = { events, formEvents, members, resources, guides };

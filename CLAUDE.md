@@ -89,7 +89,8 @@ public/         Files served as-is (favicons, OG images, static fallbacks)
 ```
 
 - Components: PascalCase filenames (`EventCard.astro`). Content files: kebab-case slugs (`2026-10-30-journal-club.md`).
-- Events: one file per event named `YYYY-MM-DD-short-name.md`; the file name becomes the URL (`/events/<name>`). Frontmatter holds the listing fields (`rsvp` shows an RSVP button); the Markdown body is the "About the event" text. Times carry their UTC offset (`-04:00` EDT, `-05:00` EST).
+- Events come from a Google Form (primary) and Markdown files (fallback). See `docs/publishing-events.md`. The form feed is the `formEvents` collection (`src/lib/events-feed.ts`, env `EVENTS_FEED_URL`), served by `google-apps-script/Code.gs`; `src/lib/events.ts` merges both, form wins on same day + title. Form question titles are a contract with the Apps Script `COLUMNS` map: change both together.
+- Markdown events: one file per event named `YYYY-MM-DD-short-name.md`; the file name becomes the URL (`/events/<name>`). Frontmatter holds the listing fields (`rsvp` shows an RSVP button); the Markdown body is the "About the event" text. Times carry their UTC offset (`-04:00` EDT, `-05:00` EST).
 - Date-only fields (like a guide's `updated`) are formatted in UTC with `formatDateOnly`; date-times use Providence time.
 - Content files with `draft: true` show in `npm run dev` (marked "Draft") and never in a production build. Placeholder entries stay drafts until Aida supplies real content.
 - The Substack feed is fetched at build time by `src/lib/substack.ts`; if it fails, the build continues with a link to Substack instead.
@@ -114,4 +115,4 @@ Work one phase at a time and stop after each for Aida to review in the browser.
 - Resources: starter entries are real, verified links (Neuromatch, Neuronal Dynamics, Dayan & Abbott, Carney, UTRA, Neuroscience concentration) chosen by Claude; Aida to review. Brown course entries still needed (one draft placeholder).
 - Copy on About and the homepage is draft.
 - Course plan worksheet and Honors application links for the declaration guide (not found publicly)
-- How co-leaders publish events (pending Aida's choice of editing workflow)
+- Events form setup (docs/publishing-events.md, steps 1–6) needs the Vercel project from phase 7

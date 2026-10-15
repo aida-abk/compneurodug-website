@@ -1,6 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-export type Event = CollectionEntry<'events'>;
+export type Event = CollectionEntry<'events'> | CollectionEntry<'formEvents'>;
 
 /**
  * Drafts are visible in `npm run dev` so co-leaders can preview them,
@@ -8,9 +8,18 @@ export type Event = CollectionEntry<'events'>;
  */
 const isVisible = (entry: { data: { draft: boolean } }) => import.meta.env.DEV || !entry.data.draft;
 
+const sameEvent = (a: Event, b: Event) =>
+  a.data.date.toDateString() === b.data.date.toDateString() &&
+  a.data.title.trim().toLowerCase() === b.data.title.trim().toLowerCase();
+
+/**
+ * Markdown events plus Google Form events, oldest first. If the same event
+ * (same day and title) exists in both, the form version wins.
+ */
 export async function getEvents(): Promise<Event[]> {
-  const events = await getCollection('events', isVisible);
-  return events.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+  const [files, form] = await Promise.all([getCollection('events', isVisible), getCollection('formEvents', isVisible)]);
+  const merged: Event[] = [...form, ...files.filter((f) => !form.some((g) => sameEvent(f, g)))];
+  return merged.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
 }
 
 export async function getUpcomingEvents(limit?: number, now = new Date()): Promise<Event[]> {
