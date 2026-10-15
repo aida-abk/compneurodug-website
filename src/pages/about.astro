@@ -38,7 +38,8 @@ const members = await getMembers();
   <section aria-labelledby="team-heading" class="border-t border-rule bg-surface py-20 md:py-28">
     <div class="container-page">
       <SectionHeader index="02 · Team" title="Who runs it" id="team-heading">
-        Questions? Email any of us.
+        Questions? Email
+        <a href={`mailto:${SITE.email}`} class="text-signal-text underline underline-offset-4">{SITE.email}</a>.
       </SectionHeader>
       <ul class="mt-12 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-3 lg:grid-cols-5">
         {members.map((member) => <MemberCard member={member} />)}

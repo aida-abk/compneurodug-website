@@ -12,7 +12,7 @@ const posts = await getLatestPosts(50);
 
 <BaseLayout title="Newsletter" description={`Every issue of the ${SITE.name.standard} newsletter.`}>
   <PageHeader label="Newsletter" title="The newsletter">
-    What we're reading and what's coming up, a few times a term.
+    A biweekly digest of events, resources and opportunities.
     <div class="mt-8 flex flex-wrap gap-3">
       <Button href={SITE.substack.subscribe}>Subscribe</Button>
       <Button href={SITE.substack.home} variant="secondary">Open on Substack</Button>
