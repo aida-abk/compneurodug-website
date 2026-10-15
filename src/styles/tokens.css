@@ -72,6 +72,7 @@
   --dug-mark-footer: 3rem; /* 48 */
   --dug-rule-width: 1px;
   --dug-radius: 0.25rem; /* 4 — subtle, Notion-like */
+  --dug-aspect-banner: 21 / 4; /* Substack header images, 2688 × 512 */
   --dug-focus-width: 2px;
   --dug-focus-offset: 3px;
 

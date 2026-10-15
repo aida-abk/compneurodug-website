@@ -1,0 +1,64 @@
+---
+// Static hero art: the logo's recursive squares unfolded into a wireframe
+// cluster. Used as the hero image until phase 4, then as the fallback for
+// mobile, low-power devices and reduced motion.
+const SIZE = 480;
+const C = SIZE / 2;
+const rings = Array.from({ length: 12 }, (_, i) => {
+  const t = i / 11;
+  return {
+    side: 380 - t * 300,
+    angle: -18 + i * 9,
+    opacity: 0.25 + 0.6 * t,
+    // Slight drift of each center gives the cluster its off-axis depth.
+    dx: Math.sin(i * 1.3) * 10,
+    dy: Math.cos(i * 1.1) * 8,
+  };
+});
+
+const corner = (r: (typeof rings)[number], k: number) => {
+  const a = ((r.angle + 45 + k * 90) * Math.PI) / 180;
+  const radius = (r.side / 2) * Math.SQRT2;
+  return [C + r.dx + Math.cos(a) * radius, C + r.dy + Math.sin(a) * radius] as const;
+};
+
+// Edges joining matching corners of neighbouring squares form the mesh.
+const edges = rings.slice(0, -1).flatMap((r, i) =>
+  [0, 1, 2, 3].map((k) => [corner(r, k), corner(rings[i + 1], k)] as const),
+);
+const nodes = [rings[2], rings[5], rings[8]].map((r, i) => corner(r, i));
+const terminal = rings[rings.length - 1];
+---
+
+<svg viewBox={`0 0 ${SIZE} ${SIZE}`} class="h-auto w-full" aria-hidden="true" focusable="false">
+  <g class="fill-none stroke-structure" stroke-width="1" vector-effect="non-scaling-stroke">
+    {
+      edges.map(([[x1, y1], [x2, y2]]) => (
+        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke-opacity="0.35" vector-effect="non-scaling-stroke" />
+      ))
+    }
+    {
+      rings.map((r) => (
+        <rect
+          x={C + r.dx - r.side / 2}
+          y={C + r.dy - r.side / 2}
+          width={r.side}
+          height={r.side}
+          stroke-opacity={r.opacity}
+          transform={`rotate(${r.angle} ${C + r.dx} ${C + r.dy})`}
+          vector-effect="non-scaling-stroke"
+        />
+      ))
+    }
+  </g>
+  <g class="fill-signal">
+    {nodes.map(([cx, cy], i) => <circle cx={cx} cy={cy} r={7 - i * 1.5} />)}
+    <rect
+      x={C + terminal.dx - 22}
+      y={C + terminal.dy - 22}
+      width="44"
+      height="44"
+      transform={`rotate(29 ${C + terminal.dx} ${C + terminal.dy})`}
+    />
+  </g>
+</svg>

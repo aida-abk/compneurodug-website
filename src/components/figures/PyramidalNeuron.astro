@@ -1,0 +1,51 @@
+---
+// Original single-weight line drawing: a cortical pyramidal neuron.
+// Every stroke has pathLength=1 so phase 5 can trace it in.
+const paths = [
+  // Soma
+  'M188 200C186 188 194 172 200 160C206 172 214 188 212 200C205 206 195 206 188 200Z',
+  // Apical trunk and oblique branches
+  'M200 160C198 130 201 100 200 70',
+  'M199 122C182 106 166 101 151 86',
+  'M151 86C142 76 139 66 131 55',
+  'M151 86C144 91 131 93 118 88',
+  'M200 104C218 95 234 92 250 78',
+  'M250 78C258 68 262 60 270 52',
+  'M250 78C262 80 275 78 286 84',
+  // Apical tuft
+  'M200 70C192 55 185 45 175 32',
+  'M200 70C208 55 215 42 228 30',
+  'M200 70C200 55 202 40 199 22',
+  'M175 32C169 25 162 22 154 18',
+  'M175 32C178 24 176 16 180 9',
+  'M228 30C236 24 240 18 238 9',
+  'M228 30C238 30 246 26 255 20',
+  // Basal dendrites
+  'M190 201C175 210 160 212 140 225',
+  'M140 225C130 232 120 236 107 240',
+  'M140 225C138 235 135 245 128 256',
+  'M210 201C225 210 240 212 260 225',
+  'M260 225C272 230 280 236 293 238',
+  'M260 225C262 236 266 246 262 258',
+  'M195 205C190 218 181 230 172 245',
+  'M172 245C168 252 160 258 150 262',
+  // Axon and collaterals
+  'M201 206C202 230 199 252 201 290',
+  'M200 244C215 254 228 262 245 265',
+  'M201 272C190 280 182 286 170 289',
+];
+const boutons = [
+  [245, 265],
+  [170, 289],
+  [201, 291],
+];
+---
+
+<svg viewBox="0 0 400 300" class="h-auto w-full" aria-hidden="true" focusable="false" data-drawing>
+  <g class="fill-none stroke-structure" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+    {paths.map((d) => <path d={d} pathLength="1" vector-effect="non-scaling-stroke" />)}
+  </g>
+  <g class="fill-signal">
+    {boutons.map(([cx, cy]) => <circle cx={cx} cy={cy} r="2.5" />)}
+  </g>
+</svg>

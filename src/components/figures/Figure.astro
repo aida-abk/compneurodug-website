@@ -1,0 +1,21 @@
+---
+// Editorial figure: a line drawing with a small "FIG. n" label.
+// Drawings are decorative; the caption carries the meaning.
+interface Props {
+  number: number;
+  caption: string;
+  class?: string;
+}
+
+const { number, caption, class: className } = Astro.props;
+---
+
+<figure class:list={['flex flex-col', className]} data-figure>
+  <div class="relative flex-1">
+    <slot />
+  </div>
+  <figcaption class="mt-4 flex items-baseline justify-between gap-6 border-t border-rule pt-3">
+    <span class="text-small text-muted">{caption}</span>
+    <span class="label shrink-0 text-ink">Fig. {number}</span>
+  </figcaption>
+</figure>

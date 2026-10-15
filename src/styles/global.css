@@ -63,6 +63,8 @@
   --radius-*: initial;
   --radius-sm: var(--dug-radius);
 
+  --aspect-banner: var(--dug-aspect-banner);
+
   --ease-out: var(--dug-ease-out);
   --default-transition-duration: var(--dug-duration-base);
   --default-transition-timing-function: var(--dug-ease-out);

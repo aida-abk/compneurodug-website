@@ -70,20 +70,23 @@ src/
     ui/         Small reusable pieces (Button, Label, Card)
     hero/       3D hero (React island) and its static fallback
     figures/    Scroll-traced line drawings and FIG labels
+    home/       Homepage sections (Hero, Mission, WhatWeDo, UpcomingEvents, LatestNewsletter)
   content/
     events/     One .md per event
     members/    One .md per team member (photos alongside or in src/assets)
     resources/  One .md per resource
   content.config.ts  Collection schemas — the contract for content files
   layouts/      Base page layout(s)
-  lib/          Plain TS helpers (dates, RSS fetching)
+  lib/          Plain TS helpers: site.ts (names, links, nav), events.ts, substack.ts (RSS at build time), format.ts (dates in America/New_York)
   pages/        Routes
   styles/       tokens.css (variables), global.css (Tailwind + @theme)
 public/         Files served as-is (favicons, OG images, static fallbacks)
 ```
 
 - Components: PascalCase filenames (`EventCard.astro`). Content files: kebab-case slugs (`2026-10-30-journal-club.md`).
-- Content files with `draft: true` never render. Placeholder entries stay drafts until Aida supplies real content.
+- Content files with `draft: true` show in `npm run dev` (marked "Draft") and never in a production build. Placeholder entries stay drafts until Aida supplies real content.
+- The Substack feed is fetched at build time by `src/lib/substack.ts`; if it fails, the build continues with a link to Substack instead.
+- Line drawings are inline SVG in `src/components/figures/`: single weight, `stroke-structure`, every path has `pathLength="1"` for the phase 5 trace-in. The current brain and neuron are first-pass originals, likely to be replaced.
 - Content schemas change only with care: co-leaders rely on them. Document any field change in the README.
 
 ## Phases
@@ -92,7 +95,7 @@ Work one phase at a time and stop after each for Aida to review in the browser.
 
 1. Scaffold, git, CLAUDE.md — done
 2. Design tokens, fonts, base layout (nav + footer) — done
-3. Homepage as static layout, no animation
+3. Homepage as static layout, no animation — done
 4. 3D hero
 5. Scroll-traced line drawings
 6. Remaining pages (About/Team, Events, Resources, Newsletter) and the Substack RSS feed at build time
