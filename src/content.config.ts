@@ -55,6 +55,7 @@ const resources = defineCollection({
   schema: z.object({
   title: z.string(),
     category: z.enum(['concentration', 'advising', 'courses', 'research', 'reading']),
+    // A few words, shown on one line next to the title.
     summary: z.string(),
     url: z.url().optional(),
     order: z.number().int().default(0),

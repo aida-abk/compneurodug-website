@@ -1,7 +1,7 @@
 ---
 title: Neuronal Dynamics
 category: reading
-summary: Gerstner, Kistler, Naud and Paninski's textbook on spiking neuron models, free to read online with exercises.
+summary: Free textbook on spiking neuron models
 url: https://neuronaldynamics.epfl.ch
 order: 2
 ---

@@ -1,7 +1,7 @@
 ---
 title: Neuroscience undergraduate office
 category: advising
-summary: Course plan worksheets, advisor assignments and department questions go to neuroundergrad@brown.edu.
+summary: Course plans and advisor assignments
 url: mailto:neuroundergrad@brown.edu
 order: 2
 ---

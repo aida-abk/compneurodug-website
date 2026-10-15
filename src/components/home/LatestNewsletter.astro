@@ -10,9 +10,7 @@ const posts = await getLatestPosts(3);
 
 <section aria-labelledby="newsletter-heading" class="border-t border-rule bg-surface py-20 md:py-28">
   <div class="container-page">
-    <SectionHeader index="04 · Newsletter" title="From the newsletter" id="newsletter-heading">
-      Papers we're reading, people we've met and what's coming up. Published on Substack.
-    </SectionHeader>
+    <SectionHeader index="04 · Newsletter" title="From the newsletter" id="newsletter-heading" />
 
     <div class="mt-12 grid gap-6 lg:grid-cols-12">
       <ul class="grid gap-6 lg:col-span-8">
@@ -41,8 +39,7 @@ const posts = await getLatestPosts(3);
       <aside class="flex flex-col justify-between rounded-sm border border-rule bg-field p-6 md:p-8 lg:col-span-4" aria-labelledby="subscribe-heading">
         <div>
           <p class="label text-signal-text">Subscribe</p>
-          <h3 id="subscribe-heading" class="mt-3 font-serif text-h2 font-medium text-ink">One email, a few times a term.</h3>
-          <p class="mt-3 text-small text-muted">Events, papers and opportunities in computational neuroscience at Brown.</p>
+          <h3 id="subscribe-heading" class="mt-3 font-serif text-h2 font-medium text-ink">A few emails a term.</h3>
         </div>
         <div class="mt-8">
           <Button href={SITE.substack.subscribe}>Subscribe on Substack</Button>

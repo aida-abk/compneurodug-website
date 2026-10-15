@@ -1,7 +1,7 @@
 ---
 title: Carney Institute for Brain Science
 category: research
-summary: Brown's brain science institute. Browse faculty and labs working on computational and theoretical neuroscience.
+summary: Brown's brain science institute and labs
 url: https://carney.brown.edu
 order: 1
 ---

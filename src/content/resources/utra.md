@@ -1,7 +1,7 @@
 ---
 title: UTRA
 category: research
-summary: Undergraduate Teaching and Research Awards fund Brown students to work with faculty on research over the summer or semester.
+summary: Funding for research with faculty
 url: https://utra.brown.edu
 order: 2
 ---

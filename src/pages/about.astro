@@ -16,7 +16,7 @@ const members = await getMembers();
 
 <BaseLayout title="About" description={`Who we are and who runs the ${SITE.name.standard} at Brown.`}>
   <PageHeader label="About" title="About the DUG">
-    We're the student group for anyone at Brown curious about how brains compute, whatever your concentration.
+    For anyone at Brown curious how brains compute.
   </PageHeader>
 
   <section aria-labelledby="dug-heading" class="container-page py-20 md:py-28">
@@ -24,17 +24,10 @@ const members = await getMembers();
       <div class="lg:col-span-6">
         <p class="label text-signal-text">01 · Who we are</p>
         <h2 id="dug-heading" class="mt-3 text-h1 text-ink">One neuron is interesting. A network is the point.</h2>
-        <div class="mt-8 space-y-5 text-body text-muted">
-          <p>
-            Departmental Undergraduate Groups (DUGs) are student-run groups attached to a concentration at Brown. Ours
-            brings together people from neuroscience, computer science, applied maths, cognitive science and physics
-            who share one question: how does the brain compute?
-          </p>
-          <p>
-            We advise students on courses and research, connect them with faculty at Brown and the Carney Institute,
-            and build a community where it's easy to ask questions out loud.
-          </p>
-        </div>
+        <p class="mt-8 max-w-xl text-body text-muted">
+          A student-run group for the Computational Neuroscience concentration. We connect students from neuroscience,
+          CS, maths and cognitive science with each other and with faculty.
+        </p>
       </div>
       <Figure number={1} caption="Pyramidal neuron, cortex layer 5" class="lg:col-span-5 lg:col-start-8">
         <PyramidalNeuron />
@@ -45,7 +38,7 @@ const members = await getMembers();
   <section aria-labelledby="team-heading" class="border-t border-rule bg-surface py-20 md:py-28">
     <div class="container-page">
       <SectionHeader index="02 · Team" title="Who runs it" id="team-heading">
-        Questions about the DUG, an event or getting involved? Email any of us.
+        Questions? Email any of us.
       </SectionHeader>
       <ul class="mt-12 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-3 lg:grid-cols-5">
         {members.map((member) => <MemberCard member={member} />)}
@@ -58,7 +51,6 @@ const members = await getMembers();
       <div class="md:col-span-8">
         <p class="label text-signal-text">03 · Get involved</p>
         <h2 id="join-heading" class="mt-3 text-h2 text-ink">Everything starts with the newsletter.</h2>
-        <p class="mt-3 text-small text-muted">Events, papers and opportunities, a few times a term.</p>
       </div>
       <div class="md:col-span-4 md:justify-self-end">
         <Button href={SITE.substack.subscribe}>Subscribe on Substack</Button>

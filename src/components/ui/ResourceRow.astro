@@ -1,0 +1,38 @@
+---
+// One row in the compact Resources list: title, a few words, link target.
+// The whole row is the link.
+interface Props {
+  title: string;
+  note: string;
+  href?: string;
+  /** Shown on the right, e.g. "bulletin.brown.edu" or "Guide". */
+  meta?: string;
+  draft?: boolean;
+  external?: boolean;
+}
+
+const { title, note, href, meta, draft = false, external = true } = Astro.props;
+---
+
+<li class="group relative grid gap-1 py-5 transition-colors hover:bg-surface md:grid-cols-12 md:items-baseline md:gap-6 md:px-3">
+  <h3 class="text-body font-medium text-ink md:col-span-4">
+    {
+      href ? (
+        <a href={href} class="after:absolute after:inset-0" rel={external ? 'noopener' : undefined}>
+          {title}
+        </a>
+      ) : (
+        title
+      )
+    }
+    {draft && <span class="ml-2 label text-muted">Draft</span>}
+  </h3>
+  <p class="text-small text-muted md:col-span-5">{note}</p>
+  {
+    meta && (
+      <p class="label break-all text-signal-text md:col-span-3 md:text-right">
+        {meta} <span aria-hidden="true">{external ? '↗' : '→'}</span>
+      </p>
+    )
+  }
+</li>

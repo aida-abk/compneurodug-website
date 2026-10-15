@@ -1,6 +1,6 @@
 ---
 title: How to declare Computational Neuroscience
-summary: Five steps from reading the requirements to declaring on ASK, plus where to get help.
+summary: Five steps, from requirements to ASK
 order: 1
 updated: 2026-10-15
 ---

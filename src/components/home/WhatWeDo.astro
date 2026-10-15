@@ -11,37 +11,35 @@ const REGIONS: { id: RegionId; n: number; title: string; region: string; body: s
     n: 1,
     title: 'Advising',
     region: 'Auditory cortex',
-    body: 'We listen first. Peer advising on courses, concentrations and ways into the field.',
+    body: 'Peer advice on courses and the concentration.',
   },
   {
     id: 'arcuate',
     n: 2,
     title: 'Connecting with faculty',
     region: 'Arcuate fasciculus',
-    body: 'The pathway between understanding and speaking. Talks, lab visits and introductions to Brown and Carney researchers.',
+    body: 'Talks and intros to Brown and Carney researchers.',
   },
   {
     id: 'tpj',
     n: 3,
     title: 'Building community',
     region: 'Temporoparietal junction',
-    body: 'The social brain. Socials, study groups and a place to meet people who ask the same questions.',
+    body: 'Socials, study groups and good company.',
   },
   {
     id: 'visual',
     n: 4,
     title: 'Flavours of comp neuro',
     region: 'Visual cortex',
-    body: 'Seeing the field from every angle: theory, data, machine learning, cognition and neuroengineering.',
+    body: 'Theory, data, ML, cognition, neuroengineering.',
   },
 ];
 ---
 
 <section aria-labelledby="what-heading" class="brain-map border-t border-rule bg-surface py-20 md:py-28">
   <div class="container-page">
-    <SectionHeader index="02 · What we do" title="A map of what we do" id="what-heading">
-      Every part of the DUG has a job, like regions of the brain. Here is where each one lives.
-    </SectionHeader>
+    <SectionHeader index="02 · What we do" title="A map of what we do" id="what-heading" />
 
     <div class="grid gap-12 pt-12 md:pt-16 lg:grid-cols-12 lg:items-center lg:gap-6">
       <Figure number={1} caption="Left hemisphere, lateral view, annotated" class="lg:col-span-8">
