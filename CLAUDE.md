@@ -45,7 +45,8 @@ Before finishing any phase, `npm run build` and `npx astro check` both pass.
 - `prefers-reduced-motion: reduce` disables 3D motion, scroll-triggered animation and Lenis smooth scrolling. Content must be fully visible and readable with all motion off (line drawings render fully drawn).
 - The 3D hero is desktop only and lazy: load it with `client:visible` or `client:idle`, never `client:load`. Mobile, low-power devices (`navigator.hardwareConcurrency`, `saveData`, no WebGL) and reduced-motion users get a static image fallback.
 - Animations initialise only after the content is in the DOM; animate `transform` and `opacity`, not layout properties.
-- Pending: Aida reviews one motion version in phase 4 before the rules are final. The Figma board's motion spec (logo plays once, never loops) applies to the logo until then.
+- Hero (phase 4): `HeroCanvas.tsx` hydrates with `client:media="(min-width: 64rem)"`, then checks reduced motion, Save-Data, CPU cores and memory (4+), and WebGL before lazy-importing `HeroScene.tsx` (Three.js). The server-rendered `HeroArt.astro` SVG stays underneath and fades out once the first 3D frame draws. Rendering pauses when the hero is off screen. Scene colors are read from the CSS tokens at runtime.
+- Pending: Aida reviews this first motion version before the rules are final. The Figma board's motion spec (logo plays once, never loops) applies to the logo until then.
 
 ## Accessibility rules
 
@@ -96,7 +97,7 @@ Work one phase at a time and stop after each for Aida to review in the browser.
 1. Scaffold, git, CLAUDE.md — done
 2. Design tokens, fonts, base layout (nav + footer) — done
 3. Homepage as static layout, no animation — done
-4. 3D hero
+4. 3D hero — done (motion pending review)
 5. Scroll-traced line drawings
 6. Remaining pages (About/Team, Events, Resources, Newsletter) and the Substack RSS feed at build time
 7. Deployment prep (Vercel, GitHub, metadata, Lighthouse pass)

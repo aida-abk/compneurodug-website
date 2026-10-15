@@ -79,6 +79,7 @@
   /* ---- Motion ---- */
   --dug-duration-fast: 150ms;
   --dug-duration-base: 250ms;
+  --dug-duration-slow: 800ms;
   --dug-ease-out: cubic-bezier(0.22, 0.78, 0.3, 1); /* From animated logo */
 }
 
@@ -116,5 +117,6 @@
   :root {
     --dug-duration-fast: 0ms;
     --dug-duration-base: 0ms;
+    --dug-duration-slow: 0ms;
   }
 }

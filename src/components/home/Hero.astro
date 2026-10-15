@@ -1,6 +1,7 @@
 ---
 import Button from '../ui/Button.astro';
 import HeroArt from '../hero/HeroArt.astro';
+import HeroCanvas from '../hero/HeroCanvas';
 import { SITE } from '../../lib/site';
 ---
 
@@ -18,8 +19,21 @@ import { SITE } from '../../lib/site';
         <Button href={SITE.substack.subscribe} variant="secondary">Get the newsletter</Button>
       </div>
     </div>
-    <div class="mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none" data-hero-art>
-      <HeroArt />
+    <div class="relative mx-auto aspect-square w-full max-w-md lg:col-span-5 lg:max-w-none" data-hero-art>
+      <div class="hero-fallback">
+        <HeroArt />
+      </div>
+      <!-- 3D only on large screens; HeroCanvas also checks motion, power and WebGL. -->
+      <HeroCanvas client:media="(min-width: 64rem)" />
     </div>
   </div>
 </section>
+
+<style>
+  .hero-fallback {
+    transition: opacity var(--dug-duration-slow) var(--dug-ease-out);
+  }
+  [data-hero-art][data-live] .hero-fallback {
+    opacity: 0;
+  }
+</style>
