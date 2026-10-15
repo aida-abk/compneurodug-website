@@ -8,6 +8,8 @@ export type Event = CollectionEntry<'events'> | CollectionEntry<'formEvents'>;
  */
 const isVisible = (entry: { data: { draft: boolean } }) => import.meta.env.DEV || !entry.data.draft;
 
+const FEED_CONFIGURED = Boolean(process.env.EVENTS_FEED_URL ?? import.meta.env.EVENTS_FEED_URL);
+
 const sameEvent = (a: Event, b: Event) =>
   a.data.date.toDateString() === b.data.date.toDateString() &&
   a.data.title.trim().toLowerCase() === b.data.title.trim().toLowerCase();
@@ -17,7 +19,11 @@ const sameEvent = (a: Event, b: Event) =>
  * (same day and title) exists in both, the form version wins.
  */
 export async function getEvents(): Promise<Event[]> {
-  const [files, form] = await Promise.all([getCollection('events', isVisible), getCollection('formEvents', isVisible)]);
+  const [files, form] = await Promise.all([
+    getCollection('events', isVisible),
+    // Skip the form collection when no feed is configured (avoids empty-collection warnings).
+    FEED_CONFIGURED ? getCollection('formEvents', isVisible) : Promise.resolve([]),
+  ]);
   const merged: Event[] = [...form, ...files.filter((f) => !form.some((g) => sameEvent(f, g)))];
   return merged.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
 }
