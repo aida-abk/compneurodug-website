@@ -45,6 +45,9 @@ Before finishing any phase, `npm run build` and `npx astro check` both pass.
 - `prefers-reduced-motion: reduce` disables 3D motion, scroll-triggered animation and Lenis smooth scrolling. Content must be fully visible and readable with all motion off (line drawings render fully drawn).
 - The 3D hero is desktop only and lazy: load it with `client:visible` or `client:idle`, never `client:load`. Mobile, low-power devices (`navigator.hardwareConcurrency`, `saveData`, no WebGL) and reduced-motion users get a static image fallback.
 - Animations initialise only after the content is in the DOM; animate `transform` and `opacity`, not layout properties.
+- Scroll tracing (phase 5): `Figure.astro` loads `src/lib/motion/trace.ts` (GSAP ScrollTrigger + DrawSVG, ~46 KB gzipped) only on pages with figures. It's scrubbed to scroll, wrapped in `gsap.matchMedia` so reduced motion reverts it, and never hides anything before it runs.
+- Smooth scrolling: `src/lib/motion/smooth-scroll.ts` (Lenis, ~5.5 KB) runs on every page from `BaseLayout.astro`, off under reduced motion; anchor links offset by the nav height.
+- Don't animate the opacity of `.brain-region` with GSAP: CSS owns it for the hover highlight. Animate the `data-trace-reveal` wrapper instead.
 - Hero (phase 4): a 1.4 KB script (`hero/hero-gate.ts`, run from `Hero.astro`) waits for idle, then checks desktop width (64rem+), reduced motion, Save-Data, CPU cores and memory (4+), and WebGL before lazy-importing `hero/hero-scene.ts` (Three.js). No React on the homepage. The server-rendered `HeroArt.astro` SVG stays underneath and fades out once the first 3D frame draws. Rendering pauses when the hero is off screen. Scene colors are read from the CSS tokens at runtime.
 - Pending: Aida reviews this first motion version before the rules are final. The Figma board's motion spec (logo plays once, never loops) applies to the logo until then.
 
@@ -78,7 +81,7 @@ src/
     resources/  One .md per resource
   content.config.ts  Collection schemas — the contract for content files
   layouts/      Base page layout(s)
-  lib/          Plain TS helpers: site.ts (names, links, nav), events.ts, substack.ts (RSS at build time), format.ts (dates in America/New_York)
+  lib/          Plain TS helpers (motion/ holds trace.ts and smooth-scroll.ts): site.ts (names, links, nav), events.ts, substack.ts (RSS at build time), format.ts (dates in America/New_York)
   pages/        Routes
   styles/       tokens.css (variables), global.css (Tailwind + @theme)
 public/         Files served as-is (favicons, OG images, static fallbacks)
@@ -87,7 +90,7 @@ public/         Files served as-is (favicons, OG images, static fallbacks)
 - Components: PascalCase filenames (`EventCard.astro`). Content files: kebab-case slugs (`2026-10-30-journal-club.md`).
 - Content files with `draft: true` show in `npm run dev` (marked "Draft") and never in a production build. Placeholder entries stay drafts until Aida supplies real content.
 - The Substack feed is fetched at build time by `src/lib/substack.ts`; if it fails, the build continues with a link to Substack instead.
-- Line drawings are inline SVG in `src/components/figures/`: single weight, `stroke-structure`, every path has `pathLength="1"` for the phase 5 trace-in. The homepage brain (`BrainMap.astro`) maps DUG functions to regions: Advising → auditory cortex, Connecting with faculty → arcuate fasciculus, Building community → temporoparietal junction, Flavours of comp neuro → visual cortex. Region ids must match `REGIONS` in `WhatWeDo.astro`. `PyramidalNeuron.astro` is reserved for the About page.
+- Line drawings are inline SVG in `src/components/figures/`: single weight, `stroke-structure`, `vector-effect="non-scaling-stroke"`. Don't add `pathLength` (it breaks DrawSVG). Tracing markup: `data-trace-group="outline"` (children draw first), then `data-trace-group="annotation"` groups in order, containing `data-trace-draw` strokes and `data-trace-reveal` elements. See `src/lib/motion/trace.ts`. The homepage brain (`BrainMap.astro`) maps DUG functions to regions: Advising → auditory cortex, Connecting with faculty → arcuate fasciculus, Building community → temporoparietal junction, Flavours of comp neuro → visual cortex. Region ids must match `REGIONS` in `WhatWeDo.astro`. `PyramidalNeuron.astro` is reserved for the About page.
 - Content schemas change only with care: co-leaders rely on them. Document any field change in the README.
 
 ## Phases
@@ -98,7 +101,7 @@ Work one phase at a time and stop after each for Aida to review in the browser.
 2. Design tokens, fonts, base layout (nav + footer) — done
 3. Homepage as static layout, no animation — done
 4. 3D hero — done (motion pending review)
-5. Scroll-traced line drawings
+5. Scroll-traced line drawings — done (pending review)
 6. Remaining pages (About/Team, Events, Resources, Newsletter) and the Substack RSS feed at build time
 7. Deployment prep (Vercel, GitHub, metadata, Lighthouse pass)
 

@@ -49,5 +49,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <slot />
     </main>
     <Footer />
+    <script>
+      import { initSmoothScroll } from '../lib/motion/smooth-scroll';
+
+      initSmoothScroll();
+    </script>
   </body>
 </html>

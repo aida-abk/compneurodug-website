@@ -1,6 +1,6 @@
 ---
 // Original single-weight line drawing: a cortical pyramidal neuron.
-// Every stroke has pathLength=1 so phase 5 can trace it in.
+// Traced in on scroll by src/lib/trace.ts: outline first, then the boutons.
 const paths = [
   // Soma
   'M188 200C186 188 194 172 200 160C206 172 214 188 212 200C205 206 195 206 188 200Z',
@@ -42,10 +42,12 @@ const boutons = [
 ---
 
 <svg viewBox="0 0 400 300" class="h-auto w-full" aria-hidden="true" focusable="false" data-drawing>
-  <g class="fill-none stroke-structure" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
-    {paths.map((d) => <path d={d} pathLength="1" vector-effect="non-scaling-stroke" />)}
+  <g class="fill-none stroke-structure" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" data-trace-group="outline">
+    {paths.map((d) => <path d={d} vector-effect="non-scaling-stroke" />)}
   </g>
-  <g class="fill-signal">
-    {boutons.map(([cx, cy]) => <circle cx={cx} cy={cy} r="2.5" />)}
+  <g class="fill-signal" data-trace-group="annotation">
+    <g data-trace-reveal>
+      {boutons.map(([cx, cy]) => <circle cx={cx} cy={cy} r="2.5" />)}
+    </g>
   </g>
 </svg>

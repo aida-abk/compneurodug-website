@@ -1,7 +1,8 @@
 ---
 // Original single-weight line drawing: left hemisphere, lateral view, with
 // four highlightable regions. Region ids match `REGIONS` in WhatWeDo.astro.
-// Every outline stroke has pathLength=1 so phase 5 can trace it in.
+// Tracing (phase 5, src/lib/trace.ts): the `outline` group draws in first,
+// then each `annotation` group (region, leader line, marker) in order.
 
 export type RegionId = 'auditory' | 'arcuate' | 'tpj' | 'visual';
 
@@ -83,41 +84,73 @@ const callouts: { id: RegionId; n: number; anchor: [number, number]; marker: [nu
 ---
 
 <svg viewBox="0 0 640 420" class="h-auto w-full overflow-visible" aria-hidden="true" focusable="false" data-drawing>
-  <g class="fill-none stroke-structure" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
-    {outline.map((d) => <path d={d} pathLength="1" vector-effect="non-scaling-stroke" />)}
+  <g
+    class="fill-none stroke-structure"
+    stroke-width="1.25"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    data-trace-group="outline"
+  >
+    {outline.map((d) => <path d={d} vector-effect="non-scaling-stroke" />)}
   </g>
 
   {
-    regions.map(({ id, d, kind }) =>
-      kind === 'area' ? (
-        <path d={d} data-region={id} class="brain-region fill-signal stroke-signal" stroke-width="1.25" vector-effect="non-scaling-stroke" />
-      ) : (
-        <g data-region={id} class="brain-region">
-          <path
-            d={d}
-            class="fill-none stroke-signal"
-            stroke-width="2"
-            stroke-dasharray="4 5"
-            stroke-linecap="round"
-            vector-effect="non-scaling-stroke"
-          />
-          <circle cx="215" cy="232" r="5" class="fill-signal" />
-          <circle cx="385" cy="250" r="5" class="fill-signal" />
+    callouts.map(({ id, n, anchor: [ax, ay], marker: [mx, my] }) => {
+      const region = regions.find((r) => r.id === id)!;
+      return (
+        <g data-trace-group="annotation">
+          <g data-trace-reveal>
+            {region.kind === 'area' ? (
+              <path
+                d={region.d}
+                data-region={id}
+                class="brain-region fill-signal stroke-signal"
+                stroke-width="1.25"
+                vector-effect="non-scaling-stroke"
+              />
+            ) : (
+              <g data-region={id} class="brain-region">
+                <path
+                  d={region.d}
+                  class="fill-none stroke-signal"
+                  stroke-width="2"
+                  stroke-dasharray="4 5"
+                  stroke-linecap="round"
+                  vector-effect="non-scaling-stroke"
+                />
+                <circle cx="215" cy="232" r="5" class="fill-signal" />
+                <circle cx="385" cy="250" r="5" class="fill-signal" />
+              </g>
+            )}
+          </g>
+          <g data-callout={id} class="brain-callout">
+            <line
+              x1={ax}
+              y1={ay}
+              x2={mx}
+              y2={my}
+              class="stroke-muted"
+              stroke-width="0.75"
+              vector-effect="non-scaling-stroke"
+              data-trace-draw
+            />
+            <g data-trace-reveal>
+              <circle cx={ax} cy={ay} r="2.5" class="fill-ink" />
+              <circle
+                cx={mx}
+                cy={my}
+                r="12"
+                class="brain-callout-marker fill-field stroke-ink"
+                stroke-width="1"
+                vector-effect="non-scaling-stroke"
+              />
+              <text x={mx} y={my} dy="0.35em" text-anchor="middle" class="brain-callout-number fill-ink font-mono text-label">
+                {n}
+              </text>
+            </g>
+          </g>
         </g>
-      ),
-    )
-  }
-
-  {
-    callouts.map(({ id, n, anchor: [ax, ay], marker: [mx, my] }) => (
-      <g data-callout={id} class="brain-callout">
-        <line x1={ax} y1={ay} x2={mx} y2={my} class="stroke-muted" stroke-width="0.75" vector-effect="non-scaling-stroke" />
-        <circle cx={ax} cy={ay} r="2.5" class="fill-ink" />
-        <circle cx={mx} cy={my} r="12" class="brain-callout-marker fill-field stroke-ink" stroke-width="1" vector-effect="non-scaling-stroke" />
-        <text x={mx} y={my} dy="0.35em" text-anchor="middle" class="brain-callout-number fill-ink font-mono text-label">
-          {n}
-        </text>
-      </g>
-    ))
+      );
+    })
   }
 </svg>

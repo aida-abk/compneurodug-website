@@ -19,3 +19,9 @@ const { number, caption, class: className } = Astro.props;
     <span class="label shrink-0 text-ink">Fig. {number}</span>
   </figcaption>
 </figure>
+
+<script>
+  import { initTrace } from '../../lib/motion/trace';
+
+  initTrace();
+</script>
