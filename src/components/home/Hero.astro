@@ -1,7 +1,6 @@
 ---
 import Button from '../ui/Button.astro';
 import HeroArt from '../hero/HeroArt.astro';
-import HeroCanvas from '../hero/HeroCanvas';
 import { SITE } from '../../lib/site';
 ---
 
@@ -23,11 +22,19 @@ import { SITE } from '../../lib/site';
       <div class="hero-fallback">
         <HeroArt />
       </div>
-      <!-- 3D only on large screens; HeroCanvas also checks motion, power and WebGL. -->
-      <HeroCanvas client:media="(min-width: 64rem)" />
+      <!-- 3D layer: hero-gate.ts mounts it on capable desktops only. -->
+      <div class="absolute inset-0" data-hero-stage aria-hidden="true"></div>
     </div>
   </div>
 </section>
+
+<script>
+  import { initHero } from '../hero/hero-gate';
+
+  const art = document.querySelector<HTMLElement>('[data-hero-art]');
+  const stage = art?.querySelector<HTMLElement>('[data-hero-stage]');
+  if (art && stage) initHero(art, stage);
+</script>
 
 <style>
   .hero-fallback {

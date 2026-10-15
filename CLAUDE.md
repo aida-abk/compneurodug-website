@@ -10,7 +10,7 @@ Website for Brown's Computational Neuroscience Departmental Undergraduate Group 
 
 - Astro 7 + TypeScript (strict), React islands only for interactive pieces
 - Tailwind CSS v4 via `@tailwindcss/vite`, driven by design tokens
-- Three.js via `@react-three/fiber` + `@react-three/drei` (3D hero only)
+- Three.js, plain with named imports (3D hero only). React Three Fiber was dropped in phase 4: it doubled the hero bundle (240 KB → 131 KB gzipped without it)
 - GSAP (ScrollTrigger, DrawSVG) for scroll animation, Lenis for smooth scrolling
 - Content collections (Markdown) for events, members, resources
 - Deploys to Vercel from GitHub (`@astrojs/vercel` adapter)
@@ -45,7 +45,7 @@ Before finishing any phase, `npm run build` and `npx astro check` both pass.
 - `prefers-reduced-motion: reduce` disables 3D motion, scroll-triggered animation and Lenis smooth scrolling. Content must be fully visible and readable with all motion off (line drawings render fully drawn).
 - The 3D hero is desktop only and lazy: load it with `client:visible` or `client:idle`, never `client:load`. Mobile, low-power devices (`navigator.hardwareConcurrency`, `saveData`, no WebGL) and reduced-motion users get a static image fallback.
 - Animations initialise only after the content is in the DOM; animate `transform` and `opacity`, not layout properties.
-- Hero (phase 4): `HeroCanvas.tsx` hydrates with `client:media="(min-width: 64rem)"`, then checks reduced motion, Save-Data, CPU cores and memory (4+), and WebGL before lazy-importing `HeroScene.tsx` (Three.js). The server-rendered `HeroArt.astro` SVG stays underneath and fades out once the first 3D frame draws. Rendering pauses when the hero is off screen. Scene colors are read from the CSS tokens at runtime.
+- Hero (phase 4): a 1.4 KB script (`hero/hero-gate.ts`, run from `Hero.astro`) waits for idle, then checks desktop width (64rem+), reduced motion, Save-Data, CPU cores and memory (4+), and WebGL before lazy-importing `hero/hero-scene.ts` (Three.js). No React on the homepage. The server-rendered `HeroArt.astro` SVG stays underneath and fades out once the first 3D frame draws. Rendering pauses when the hero is off screen. Scene colors are read from the CSS tokens at runtime.
 - Pending: Aida reviews this first motion version before the rules are final. The Figma board's motion spec (logo plays once, never loops) applies to the logo until then.
 
 ## Accessibility rules
@@ -69,7 +69,7 @@ src/
   components/
     layout/     Nav, Footer, page shells
     ui/         Small reusable pieces (Button, Label, Card)
-    hero/       3D hero (React island) and its static fallback
+    hero/       3D hero (hero-gate.ts, hero-scene.ts) and its static SVG fallback
     figures/    Scroll-traced line drawings and FIG labels
     home/       Homepage sections (Hero, Mission, WhatWeDo, UpcomingEvents, LatestNewsletter)
   content/
