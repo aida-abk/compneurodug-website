@@ -26,3 +26,20 @@ export const NAV_LINKS: NavLink[] = [
   { href: '/resources', label: 'Resources' },
   { href: '/newsletter', label: 'Newsletter' },
 ];
+
+// Partner logos (Figma 03 — With Brown and Carney). Official, unaltered files
+// only: never recolor, redraw, crop the artwork or place on coral/dark.
+// Set `show: false` to hide a partner everywhere.
+export const PARTNERS = {
+  brown: {
+    name: 'Brown University',
+    href: 'https://www.brown.edu',
+    show: true, // Approved per Aida, October 2026
+  },
+  carney: {
+    name: 'Carney Institute for Brain Science',
+    href: 'https://carney.brown.edu',
+    // Hidden until an official transparent PNG/SVG replaces the grey-background file.
+    show: false,
+  },
+} as const;

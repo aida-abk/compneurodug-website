@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import Lockup from './Lockup.astro';
-import { NAV_LINKS, SITE } from '../../lib/site';
+import { NAV_LINKS, PARTNERS, SITE } from '../../lib/site';
+import brownLogo from '../../assets/partners/brown-university.png';
 
 const year = new Date().getFullYear();
 ---
@@ -8,7 +10,19 @@ const year = new Date().getFullYear();
 <footer class="mt-auto border-t border-rule bg-surface">
   <div class="container-page grid gap-12 py-16 md:grid-cols-12 md:gap-6">
     <div class="md:col-span-6">
-      <Lockup markClass="size-mark-footer" />
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-6">
+        <Lockup markClass="size-mark-footer" />
+        {
+          PARTNERS.brown.show && (
+            <>
+              <span class="hidden h-mark-footer w-px bg-rule lg:block" aria-hidden="true" />
+              <a href={PARTNERS.brown.href} class="rounded-sm" rel="noopener">
+                <Image src={brownLogo} alt={PARTNERS.brown.name} class="h-mark-footer w-auto" height={96} />
+              </a>
+            </>
+          )
+        }
+      </div>
       <p class="mt-6 max-w-md text-small text-muted">
         The {SITE.name.formal} at {SITE.university}. Talks, journal club, research and community at the
         intersection of brains and computation.

@@ -1,0 +1,123 @@
+---
+// Original single-weight line drawing: left hemisphere, lateral view, with
+// four highlightable regions. Region ids match `REGIONS` in WhatWeDo.astro.
+// Every outline stroke has pathLength=1 so phase 5 can trace it in.
+
+export type RegionId = 'auditory' | 'arcuate' | 'tpj' | 'visual';
+
+const outline = [
+  // Cerebrum
+  'M60 215C52 150 95 92 160 68C220 46 290 40 350 50C430 62 500 100 535 160C556 196 552 238 530 258C512 274 488 280 462 278C440 288 420 300 392 306C340 318 280 322 235 316C200 312 178 300 172 284C168 272 160 266 145 268C110 272 70 256 60 215Z',
+  // Lateral (Sylvian) fissure and anterior rami
+  'M172 270C210 252 260 238 320 226C345 221 360 214 372 198',
+  'M205 256C202 244 206 236 214 230',
+  'M222 252C230 244 240 242 248 236',
+  // Central, precentral and postcentral sulci
+  'M332 49C322 80 342 104 328 134C318 158 336 176 322 200C316 212 318 220 312 228',
+  'M298 50C290 80 306 104 294 132C286 152 300 170 290 196',
+  'M365 55C356 86 374 110 362 138C356 154 368 170 360 190',
+  // Frontal sulci and gyri
+  'M110 140C140 120 180 112 220 106C250 102 270 96 292 92',
+  'M92 196C125 182 165 186 200 170C230 158 260 160 292 150',
+  'M80 170C95 160 108 165 120 155',
+  'M140 80C150 95 145 110 158 120',
+  'M200 65C210 80 204 92 216 102',
+  'M150 222C165 212 180 216 195 206',
+  'M240 125C252 134 248 148 262 156',
+  'M100 115C112 104 126 108 134 96',
+  'M245 70C252 84 266 84 270 98',
+  'M118 238C128 230 140 234 150 226',
+  // Parietal sulci and gyri
+  'M372 150C400 135 430 140 460 128C480 120 495 125 510 120',
+  'M400 70C392 88 406 100 398 118',
+  'M420 95C440 100 450 92 466 100',
+  'M372 198C385 186 400 190 404 205C408 220 395 230 384 226',
+  'M446 200C460 188 478 194 478 210C478 226 462 232 452 226',
+  'M430 160C440 170 434 182 446 188',
+  // Occipital sulci
+  'M470 80C460 100 474 118 462 140',
+  'M505 165C490 180 498 196 484 212',
+  'M520 200C508 214 514 228 500 240',
+  'M490 250C478 258 470 254 458 262',
+  // Temporal sulci
+  'M205 292C250 276 300 270 350 258C380 251 400 248 420 232C432 222 438 212 446 200',
+  'M230 308C270 300 320 300 362 290C390 284 410 286 432 276',
+  'M262 296C276 288 290 292 300 284',
+  // Cerebellum and folia
+  'M392 306C405 336 440 356 480 352C515 348 536 326 534 298C533 282 524 270 512 266',
+  'M408 318C440 336 488 336 524 306',
+  'M416 330C448 346 492 344 528 318',
+  'M432 342C460 352 494 350 520 334',
+  'M404 310C432 322 470 324 500 314C512 310 522 302 530 292',
+  // Brainstem
+  'M350 314C362 340 364 370 356 404',
+  'M392 318C396 345 396 375 392 404',
+];
+
+const regions: { id: RegionId; d: string; kind: 'area' | 'tract' }[] = [
+  {
+    id: 'auditory',
+    kind: 'area',
+    d: 'M262 244C290 238 320 230 345 224C352 236 352 248 350 258C320 264 290 270 262 276C256 266 256 254 262 244Z',
+  },
+  { id: 'arcuate', kind: 'tract', d: 'M215 232C240 180 330 165 380 190C400 202 400 230 385 250' },
+  {
+    id: 'tpj',
+    kind: 'area',
+    d: 'M390 200C392 182 410 172 430 174C450 176 462 190 460 208C458 226 440 236 420 234C400 232 388 218 390 200Z',
+  },
+  {
+    id: 'visual',
+    kind: 'area',
+    d: 'M500 150C522 170 540 200 538 230C536 248 528 258 516 264C500 250 492 230 490 210C488 190 492 168 500 150Z',
+  },
+];
+
+// Numbered callouts: anchor on the region, marker outside the drawing.
+const callouts: { id: RegionId; n: number; anchor: [number, number]; marker: [number, number] }[] = [
+  { id: 'auditory', n: 1, anchor: [305, 250], marker: [290, 392] },
+  { id: 'arcuate', n: 2, anchor: [300, 177], marker: [250, 18] },
+  { id: 'tpj', n: 3, anchor: [432, 196], marker: [590, 70] },
+  { id: 'visual', n: 4, anchor: [522, 215], marker: [608, 236] },
+];
+---
+
+<svg viewBox="0 0 640 420" class="h-auto w-full overflow-visible" aria-hidden="true" focusable="false" data-drawing>
+  <g class="fill-none stroke-structure" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+    {outline.map((d) => <path d={d} pathLength="1" vector-effect="non-scaling-stroke" />)}
+  </g>
+
+  {
+    regions.map(({ id, d, kind }) =>
+      kind === 'area' ? (
+        <path d={d} data-region={id} class="brain-region fill-signal stroke-signal" stroke-width="1.25" vector-effect="non-scaling-stroke" />
+      ) : (
+        <g data-region={id} class="brain-region">
+          <path
+            d={d}
+            class="fill-none stroke-signal"
+            stroke-width="2"
+            stroke-dasharray="4 5"
+            stroke-linecap="round"
+            vector-effect="non-scaling-stroke"
+          />
+          <circle cx="215" cy="232" r="5" class="fill-signal" />
+          <circle cx="385" cy="250" r="5" class="fill-signal" />
+        </g>
+      ),
+    )
+  }
+
+  {
+    callouts.map(({ id, n, anchor: [ax, ay], marker: [mx, my] }) => (
+      <g data-callout={id} class="brain-callout">
+        <line x1={ax} y1={ay} x2={mx} y2={my} class="stroke-muted" stroke-width="0.75" vector-effect="non-scaling-stroke" />
+        <circle cx={ax} cy={ay} r="2.5" class="fill-ink" />
+        <circle cx={mx} cy={my} r="12" class="brain-callout-marker fill-field stroke-ink" stroke-width="1" vector-effect="non-scaling-stroke" />
+        <text x={mx} y={my} dy="0.35em" text-anchor="middle" class="brain-callout-number fill-ink font-mono text-label">
+          {n}
+        </text>
+      </g>
+    ))
+  }
+</svg>

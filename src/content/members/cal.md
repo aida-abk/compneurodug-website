@@ -1,5 +1,6 @@
 ---
-name: Cal
-role: Co-leader # TODO: confirm role
+name: Cal Dearborn
+role: DUG Leader
+email: cal_dearborn@brown.edu
 order: 4
 ---

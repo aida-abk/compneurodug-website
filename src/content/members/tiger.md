@@ -1,5 +1,6 @@
 ---
-name: Tiger
-role: Co-leader # TODO: confirm role
+name: Tiger Jiang
+role: DUG Leader
+email: mahu_jiang@brown.edu
 order: 5
 ---

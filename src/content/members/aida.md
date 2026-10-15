@@ -1,5 +1,6 @@
 ---
-name: Aida
-role: Co-leader # TODO: confirm role
-order: 1
+name: Aida Abkenova
+role: DUG Leader
+email: aida_abkenova@brown.edu
+order: 3
 ---

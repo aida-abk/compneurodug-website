@@ -29,6 +29,7 @@ const members = defineCollection({
       order: z.number().int(),
       photo: image().optional(),
       photoAlt: z.string().optional(),
+      email: z.email().optional(),
       pronouns: z.string().optional(),
       concentration: z.string().optional(),
       year: z.number().int().optional(),

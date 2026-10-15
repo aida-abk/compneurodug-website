@@ -1,5 +1,6 @@
 ---
-name: Nhi
-role: Co-leader # TODO: confirm role
-order: 3
+name: Nhi Nguyen
+role: DUG Leader
+email: nhi_nguyen@brown.edu
+order: 2
 ---

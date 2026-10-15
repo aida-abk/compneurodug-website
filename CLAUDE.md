@@ -38,7 +38,7 @@ Before finishing any phase, `npm run build` and `npx astro check` both pass.
 - `global.css` clears Tailwind's default colors, fonts, weights, type sizes and radii, so only brand utilities exist: colors `field surface structure signal ink muted signal-text signal-display rule`; type `text-display text-h1 text-h2 text-h3 text-body text-small text-label`; fonts `font-serif font-sans font-mono`; plus `container-page` and `label` utilities. Type tokens switch from mobile to desktop values at 48rem.
 - The one exception: `public/favicon.svg` carries raw hex, because browsers can't read CSS variables there. Keep it in sync with `tokens.css`.
 - Logo: `src/components/ui/LogoMark.astro` copies the Figma component geometry (Compact 3:66, Favicon 3:82). Never redraw, recolor or rotate it.
-- Brown and Carney logos need written approval before use (Figma 03). Don't add them until Aida confirms.
+- Partner logos follow Figma 03: ours first, same height as our mark, 1px Rule divider, official unaltered files only (transparent padding may be trimmed). Toggle with `PARTNERS` in `src/lib/site.ts`. Brown: approved (Oct 2026), shown in the footer. Carney: hidden until an official transparent file replaces the grey-background PNG.
 
 ## Motion rules
 
@@ -86,7 +86,7 @@ public/         Files served as-is (favicons, OG images, static fallbacks)
 - Components: PascalCase filenames (`EventCard.astro`). Content files: kebab-case slugs (`2026-10-30-journal-club.md`).
 - Content files with `draft: true` show in `npm run dev` (marked "Draft") and never in a production build. Placeholder entries stay drafts until Aida supplies real content.
 - The Substack feed is fetched at build time by `src/lib/substack.ts`; if it fails, the build continues with a link to Substack instead.
-- Line drawings are inline SVG in `src/components/figures/`: single weight, `stroke-structure`, every path has `pathLength="1"` for the phase 5 trace-in. The current brain and neuron are first-pass originals, likely to be replaced.
+- Line drawings are inline SVG in `src/components/figures/`: single weight, `stroke-structure`, every path has `pathLength="1"` for the phase 5 trace-in. The homepage brain (`BrainMap.astro`) maps DUG functions to regions: Advising → auditory cortex, Connecting with faculty → arcuate fasciculus, Building community → temporoparietal junction, Flavours of comp neuro → visual cortex. Region ids must match `REGIONS` in `WhatWeDo.astro`. `PyramidalNeuron.astro` is reserved for the About page.
 - Content schemas change only with care: co-leaders rely on them. Document any field change in the README.
 
 ## Phases
@@ -103,6 +103,6 @@ Work one phase at a time and stop after each for Aida to review in the browser.
 
 ## Open items
 
-- Team roles, and which headshot (in `../website/headshots`) belongs to whom
+- Headshots: which photo belongs to whom (none attached yet); Ah-Young has no photo listed
 - Resource content and categories (current schema: courses, research, reading)
 - Real events

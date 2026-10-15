@@ -1,5 +1,6 @@
 ---
-name: Ah-Young
-role: Co-leader # TODO: confirm role
-order: 2
+name: Ah-Young Moon
+role: President
+email: ah-young_moon@brown.edu
+order: 1
 ---
