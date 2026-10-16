@@ -13,9 +13,11 @@ Website for Brown's Computational Neuroscience Departmental Undergraduate Group 
 - Three.js, plain with named imports (3D hero only). React Three Fiber was dropped in phase 4: it doubled the hero bundle (240 KB → 131 KB gzipped without it)
 - GSAP (ScrollTrigger, DrawSVG) for scroll animation, Lenis for smooth scrolling
 - Content collections (Markdown) for events, members, resources
-- Deploys to Vercel from GitHub (`@astrojs/vercel` adapter)
+- Static output (`dist/`), deployed to Vercel from GitHub. No adapter: there are no server routes
 
 ## Commands
+
+- `npm run check` — same as `npx astro check`
 
 - `npm run dev` — dev server (Claude runs it in the background: `npx astro dev --background`; manage with `astro dev stop|status|logs`)
 - `npm run build` — production build
@@ -36,7 +38,7 @@ Before finishing any phase, `npm run build` and `npx astro check` both pass.
 - Never hard-code hex values, px sizes or font names in components or Tailwind arbitrary values (`text-[#172827]`, `p-[13px]` are not allowed). If a value is missing, add a token first.
 - Token names follow the Figma variables (`DUG / Field` → `--dug-field` → Tailwind `bg-field`). Figma is the source of truth; if they disagree, ask Aida.
 - `global.css` clears Tailwind's default colors, fonts, weights, type sizes and radii, so only brand utilities exist: colors `field surface structure signal ink muted signal-text signal-display rule`; type `text-display text-h1 text-h2 text-h3 text-body text-small text-label`; fonts `font-serif font-sans font-mono`; plus `container-page` and `label` utilities. Type tokens switch from mobile to desktop values at 48rem.
-- The one exception: `public/favicon.svg` carries raw hex, because browsers can't read CSS variables there. Keep it in sync with `tokens.css`.
+- The exceptions: `public/favicon.svg`, `public/favicon.ico`, `public/apple-touch-icon.png`, `public/og.png` and the `theme-color` meta tag carry raw brand colors, because browsers and social sites can't read CSS variables. Keep them in sync with `tokens.css`.
 - Logo: `src/components/ui/LogoMark.astro` copies the Figma component geometry (Compact 3:66, Favicon 3:82). Never redraw, recolor or rotate it.
 - Partner logos follow Figma 03: ours first, same height as our mark, 1px Rule divider, official unaltered files only (transparent padding may be trimmed). Toggle with `PARTNERS` in `src/lib/site.ts`. Brown: approved (Oct 2026), shown in the footer. Carney: hidden until an official transparent file replaces the grey-background PNG.
 
@@ -63,7 +65,7 @@ Before finishing any phase, `npm run build` and `npx astro check` both pass.
 
 - Content pages ship zero client JavaScript unless a component needs it. Default to `.astro` components; reach for React only for interactivity.
 - Use `astro:assets` (`<Image />`) for raster images. Self-host fonts.
-- Aim for Lighthouse 90+ on Performance, Accessibility, Best Practices and SEO.
+- Aim for Lighthouse 90+ on Performance, Accessibility, Best Practices and SEO. Phase 7 baseline (simulated mobile): 88–97 Performance, 100 on the rest; desktop 100 across the board. CSS is inlined (`build.inlineStylesheets: 'always'`) and the Newsreader latin font is preloaded. The remaining mobile gap is the 132 KB optical-size Newsreader file, kept on purpose for display quality.
 
 ## Folder conventions
 
@@ -107,7 +109,7 @@ Work one phase at a time and stop after each for Aida to review in the browser.
 4. 3D hero — done (motion pending review)
 5. Scroll-traced line drawings — done (pending review)
 6. Remaining pages (About/Team, Events, Resources, Newsletter, 404) and the Substack RSS feed at build time — done
-7. Deployment prep (Vercel, GitHub, metadata, Lighthouse pass)
+7. Deployment prep (Vercel, GitHub, metadata, Lighthouse pass) — code done; GitHub, Vercel and DNS steps are Aida's
 
 ## Open items
 

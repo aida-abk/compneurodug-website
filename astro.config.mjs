@@ -3,14 +3,18 @@ import { defineConfig } from 'astro/config';
 
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
-import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
+// Fully static output (dist/). Vercel detects Astro and serves it as is; no
+// adapter needed since there are no server routes.
 export default defineConfig({
   site: 'https://www.browncompneuro.com',
   integrations: [react(), sitemap(), mdx()],
+  // The whole stylesheet is ~6 KB gzipped: inlining it removes the only
+  // render-blocking request, which was delaying mobile LCP by ~1.3s.
+  build: { inlineStylesheets: 'always' },
 
   vite: {
     plugins: [tailwindcss()],
@@ -20,7 +24,5 @@ export default defineConfig({
     optimizeDeps: {
       include: ['three', 'gsap', 'gsap/ScrollTrigger', 'gsap/DrawSVGPlugin', 'lenis']
     }
-  },
-
-  adapter: vercel()
+  }
 });
