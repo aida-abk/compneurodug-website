@@ -19,7 +19,12 @@ gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
  */
 
 const OUTLINE_STAGGER = 0.035;
-const SCRUB = 0.8; // seconds the drawing lags behind the scrollbar
+// Tied directly to scroll position (no extra lag): Lenis already smooths
+// the scroll, and lagging on top of that felt slower than the scrollbar.
+const SCRUB = true;
+// Starts as the figure enters, done once its top reaches 35% of the viewport.
+const START = 'top 85%';
+const END = 'top 35%';
 
 export function initTrace(): void {
   const drawings = document.querySelectorAll<SVGSVGElement>('[data-figure] [data-drawing]');
@@ -29,7 +34,7 @@ export function initTrace(): void {
     drawings.forEach((svg) => {
       const tl = gsap.timeline({
         defaults: { ease: 'none' },
-        scrollTrigger: { trigger: svg, start: 'top 85%', end: 'bottom 60%', scrub: SCRUB },
+        scrollTrigger: { trigger: svg, start: START, end: END, scrub: SCRUB },
       });
 
       const outline = svg.querySelectorAll('[data-trace-group="outline"] > *');
