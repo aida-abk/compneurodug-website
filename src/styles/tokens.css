@@ -21,23 +21,28 @@
   --dug-rule: #c9c1b7; /* Dividers, borders */
 
   /* ---- Font families ---- */
-  --dug-font-serif: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
-  --dug-font-sans: 'DM Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  /* Type: Young Serif (display, headings) + Hanken Grotesk (text) + DM Mono
+     (labels). Chosen Oct 2026 over the board's Newsreader + DM Sans for a
+     warmer, less generic feel; roles and sizes follow the board. */
+  --dug-font-serif: 'Young Serif', 'Young Serif Fallback', Georgia, serif;
+  --dug-font-sans: 'Hanken Grotesk Variable', 'Hanken Grotesk Fallback', ui-sans-serif, system-ui, sans-serif;
   --dug-font-mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* ---- Type scale: Web (mobile values first, desktop below) ----
    * Figma "DUG / Web Desktop / …". Sizes in rem (16px base).
    */
-  --dug-display-size: 3rem; /* 48 */
-  --dug-display-leading: 3.125rem; /* 50 */
-  --dug-display-tracking: -0.03em;
+  /* Young Serif runs ~10% wider than Newsreader: sizes are trimmed so
+     "Computational" fits a phone and the hero's text column. */
+  --dug-display-size: 2.625rem; /* 42 */
+  --dug-display-leading: 1.08;
+  --dug-display-tracking: -0.02em;
 
-  --dug-h1-size: 2.25rem; /* 36 */
-  --dug-h1-leading: 2.5rem; /* 40 */
-  --dug-h1-tracking: -0.02em;
+  --dug-h1-size: 2rem; /* 32 */
+  --dug-h1-leading: 2.375rem; /* 38 */
+  --dug-h1-tracking: -0.015em;
 
-  --dug-h2-size: 1.75rem; /* 28 */
-  --dug-h2-leading: 2.125rem; /* 34 */
+  --dug-h2-size: 1.5rem; /* 24 */
+  --dug-h2-leading: 1.875rem; /* 30 */
   --dug-h2-tracking: -0.01em;
 
   --dug-h3-size: 1.25rem; /* 20 */
@@ -62,6 +67,7 @@
 
   --dug-weight-regular: 400;
   --dug-weight-medium: 500;
+  --dug-weight-display: 400; /* Young Serif has one weight */
 
   /* ---- Layout ---- */
   --dug-spacing: 0.25rem; /* Tailwind spacing unit: p-4 = 1rem */
@@ -85,16 +91,16 @@
 
 @media (min-width: 48rem) {
   :root {
-    /* Fluid between tablet and the 1440 Figma frame, so long words like
-       "Computational" fit the hero's text column: 56px at 768 → 88px at 1440. */
-    --dug-display-size: clamp(3.5rem, 1.25rem + 4.7vw, 5.5rem);
-    --dug-display-leading: 1;
+    /* Fluid between tablet and the 1440 Figma frame, so "Computational"
+       fits the hero's text column: 51px at 768 → 84px at 1440. */
+    --dug-display-size: clamp(3.25rem, 1rem + 4.6vw, 5.25rem);
+    --dug-display-leading: 1.05;
 
-    --dug-h1-size: 3.5rem; /* 56 */
-    --dug-h1-leading: 3.75rem; /* 60 */
+    --dug-h1-size: 3.125rem; /* 50 */
+    --dug-h1-leading: 3.5rem; /* 56 */
 
-    --dug-h2-size: 2.25rem; /* 36 */
-    --dug-h2-leading: 2.625rem; /* 42 */
+    --dug-h2-size: 2rem; /* 32 */
+    --dug-h2-leading: 2.375rem; /* 38 */
 
     --dug-h3-size: 1.5rem; /* 24 */
     --dug-h3-leading: 1.875rem; /* 30 */

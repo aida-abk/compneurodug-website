@@ -19,7 +19,7 @@ const { events, past = false } = Astro.props;
       <li class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 py-8 md:grid-cols-12 md:gap-6">
         <p class="md:col-span-2">
           <time datetime={data.date.toISOString()} class="flex flex-col">
-            <span class:list={['font-serif text-h1 font-medium', past ? 'text-muted' : 'text-ink']}>
+            <span class:list={['font-serif text-h1 font-display', past ? 'text-muted' : 'text-ink']}>
               {formatDay(data.date)}
             </span>
             <span class="label text-muted">

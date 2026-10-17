@@ -1,73 +1,100 @@
 ---
 import { Image } from 'astro:assets';
 import Lockup from './Lockup.astro';
+import LogoMark from '../ui/LogoMark.astro';
+import InstagramIcon from '../ui/InstagramIcon.astro';
 import { NAV_LINKS, PARTNERS, SITE } from '../../lib/site';
 import brownLogo from '../../assets/partners/brown-university.png';
 
 const year = new Date().getFullYear();
+
+const FOLLOW = [
+  { href: SITE.instagram, label: 'Instagram' },
+  { href: SITE.substack.home, label: 'Substack newsletter' },
+  { href: SITE.substack.subscribe, label: 'Subscribe by email' },
+  { href: SITE.ed, label: 'Advising board on Ed' },
+  { href: `mailto:${SITE.email}`, label: SITE.email },
+];
+
+const link = 'text-small text-field underline decoration-transparent underline-offset-4 hover:decoration-signal';
 ---
 
-<footer class="mt-auto border-t border-rule bg-surface">
-  <div class="container-page grid gap-12 py-16 md:grid-cols-12 md:gap-6">
-    <div class="md:col-span-6">
-      <div class="flex flex-wrap items-center gap-x-5 gap-y-6">
-        <Lockup markClass="size-mark-footer" />
-        {
-          PARTNERS.brown.show && (
-            <>
-              <span class="hidden h-mark-footer w-px bg-rule lg:block" aria-hidden="true" />
-              <a href={PARTNERS.brown.href} class="rounded-sm" rel="noopener">
-                <Image src={brownLogo} alt={PARTNERS.brown.name} class="h-mark-footer w-auto" height={96} />
-              </a>
-            </>
-          )
-        }
-      </div>
-      <p class="mt-6 max-w-md text-small text-muted">
-        The {SITE.name.formal} at {SITE.university}. Talks, advising, research and community at the
-        intersection of brains and computation.
-      </p>
-    </div>
-
-    <nav aria-label="Footer" class="md:col-span-3">
-      <h2 class="label text-signal-text">Explore</h2>
-      <ul class="mt-4 space-y-2">
-        <li><a href="/" class="text-small text-ink hover:text-signal-text">Home</a></li>
-        {
-          NAV_LINKS.map(({ href, label }) => (
-            <li>
-              <a href={href} class="text-small text-ink hover:text-signal-text">
-                {label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-
-    <div class="md:col-span-3">
-      <h2 class="label text-signal-text">Follow</h2>
-      <ul class="mt-4 space-y-2">
-        <li>
-          <a href={SITE.substack.home} class="text-small text-ink hover:text-signal-text">Substack newsletter</a>
-        </li>
-        <li>
-          <a href={SITE.substack.subscribe} class="text-small text-ink hover:text-signal-text">Subscribe by email</a>
-        </li>
-        <li>
-          <a href={SITE.ed} class="text-small text-ink hover:text-signal-text">Advising board on Ed</a>
-        </li>
-        <li>
-          <a href={`mailto:${SITE.email}`} class="text-small text-ink hover:text-signal-text">{SITE.email}</a>
-        </li>
-      </ul>
+<footer class="mt-auto">
+  <!-- Partner logos stay on a light band: the brand board forbids them on dark backgrounds. -->
+  <div class="border-t border-rule bg-surface">
+    <div class="container-page flex flex-wrap items-center gap-x-5 gap-y-6 py-8">
+      <Lockup markClass="size-mark-footer" />
+      {
+        PARTNERS.brown.show && (
+          <>
+            <span class="hidden h-mark-footer w-px bg-rule lg:block" aria-hidden="true" />
+            <a href={PARTNERS.brown.href} class="rounded-sm" rel="noopener">
+              <Image src={brownLogo} alt={PARTNERS.brown.name} class="h-mark-footer w-auto" height={96} />
+            </a>
+          </>
+        )
+      }
     </div>
   </div>
 
-  <div class="border-t border-rule">
-    <div class="container-page flex flex-col gap-2 py-6 sm:flex-row sm:items-center sm:justify-between">
-      <p class="label text-muted">© {year} {SITE.name.standard}</p>
-      <p class="label text-muted">{SITE.university} · Providence, RI</p>
+  <div class="on-dark bg-structure text-field">
+    <div class="container-page grid gap-12 py-16 md:grid-cols-12 md:gap-6">
+      <div class="md:col-span-6">
+        <p class="flex items-center gap-4 font-serif text-h2 text-field">
+          <LogoMark tone="reversed" class="size-mark-footer shrink-0" />
+          {SITE.name.short}
+        </p>
+        <p class="mt-6 max-w-md text-small text-rule">
+          The {SITE.name.formal} at {SITE.university}. Talks, advising, research and community at the intersection
+          of brains and computation.
+        </p>
+        <a
+          href={SITE.instagram}
+          class="mt-8 inline-flex items-center gap-2 rounded-sm border border-field/30 px-4 py-2 text-small text-field transition-colors hover:border-field"
+          rel="noopener"
+        >
+          <InstagramIcon class="size-4" />
+          @brown_compneuro_dug
+        </a>
+      </div>
+
+      <nav aria-label="Footer" class="md:col-span-3">
+        <h2 class="label text-rule">Explore</h2>
+        <ul class="mt-4 space-y-2">
+          <li><a href="/" class={link}>Home</a></li>
+          {
+            NAV_LINKS.map(({ href, label }) => (
+              <li>
+                <a href={href} class={link}>
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="md:col-span-3">
+        <h2 class="label text-rule">Follow</h2>
+        <ul class="mt-4 space-y-2">
+          {
+            FOLLOW.map(({ href, label }) => (
+              <li>
+                <a href={href} class={link} rel={href.startsWith('http') ? 'noopener' : undefined}>
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-field/15">
+      <div class="container-page flex flex-col gap-2 py-6 sm:flex-row sm:items-center sm:justify-between">
+        <p class="label text-rule">© {year} {SITE.name.standard}</p>
+        <p class="label text-rule">{SITE.university} · Providence, RI</p>
+      </div>
     </div>
   </div>
 </footer>

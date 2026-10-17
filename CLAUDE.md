@@ -30,6 +30,8 @@ Before finishing any phase, `npm run build` and `npx astro check` both pass.
 - Warm and light throughout. No dark sections. Modern and calm, Notion-inspired: generous whitespace, 1px Rule borders, Surface cards, small DM Mono labels, a quiet grid.
 - Hero: a 3D wireframe crystalline cluster on the light Field background, drawn in Structure lines with coral Signal nodes (echoes the logo). Slow movement, subtle cursor response.
 - Content sections: editorial and scientific. Fine single-weight anatomical line drawings with small "FIG. 1"-style DM Mono labels, and a grid of short labeled descriptions beneath. Drawings trace themselves in on scroll.
+- Type (Oct 2026, Aida's choice): Young Serif for display and headings (one weight, use `font-display`), Hanken Grotesk for text, DM Mono for labels. This replaces the board's Newsreader + DM Sans; the board's roles, scale and colors still apply. The Figma text styles should be updated to match.
+- Dark green (Structure) is used for the footer. Partner logos never sit on it: they live on the light band above. On dark, small text uses Field or Rule (never coral), and focus rings switch to Field via `.on-dark`.
 - Brand rules from the Figma board apply: proportion roughly Field 60% · Surface 25% · Structure 10% · Signal 5%. Text under 24px is Ink, Muted or Signal Text — never bright Signal.
 
 ## The token rule
@@ -65,7 +67,7 @@ Before finishing any phase, `npm run build` and `npx astro check` both pass.
 
 - Content pages ship zero client JavaScript unless a component needs it. Default to `.astro` components; reach for React only for interactivity.
 - Use `astro:assets` (`<Image />`) for raster images. Self-host fonts.
-- Aim for Lighthouse 90+ on Performance, Accessibility, Best Practices and SEO. Phase 7 baseline (simulated mobile): 88–97 Performance, 100 on the rest; desktop 100 across the board. CSS is inlined (`build.inlineStylesheets: 'always'`) and the Newsreader latin font is preloaded. The remaining mobile gap is the 132 KB optical-size Newsreader file, kept on purpose for display quality.
+- Aim for Lighthouse 90+ on Performance, Accessibility, Best Practices and SEO. Phase 7 baseline (simulated mobile): 88–97 Performance, 100 on the rest; desktop 100 across the board. CSS is inlined (`build.inlineStylesheets: 'always'`) and the Young Serif latin font (27 KB) is preloaded.
 
 ## Folder conventions
 

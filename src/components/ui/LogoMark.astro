@@ -5,11 +5,14 @@
 // visible text, or pass `title` when it stands alone.
 interface Props {
   variant?: 'compact' | 'favicon';
+  /** 'reversed' = Figma "Reversed" color version, for Structure backgrounds. */
+  tone?: 'full' | 'reversed';
   class?: string;
   title?: string;
 }
 
-const { variant = 'compact', class: className, title } = Astro.props;
+const { variant = 'compact', tone = 'full', class: className, title } = Astro.props;
+const line = tone === 'reversed' ? 'stroke-field' : 'stroke-structure';
 const labelled = Boolean(title);
 ---
 
@@ -23,9 +26,9 @@ const labelled = Boolean(title);
       focusable="false"
     >
       {title && <title>{title}</title>}
-      <rect class="fill-none stroke-structure" x="26.1" y="26.1" width="127.8" height="127.8" stroke-width="9" />
+      <rect class:list={['fill-none', line]} x="26.1" y="26.1" width="127.8" height="127.8" stroke-width="9" />
       <rect
-        class="fill-none stroke-structure"
+        class:list={['fill-none', line]}
         stroke-opacity="0.7"
         x="32.82"
         y="50.9"
@@ -45,7 +48,7 @@ const labelled = Boolean(title);
       focusable="false"
     >
       {title && <title>{title}</title>}
-      <rect class="fill-none stroke-structure" x="10.24" y="10.24" width="43.52" height="43.52" stroke-width="6.4" />
+      <rect class:list={['fill-none', line]} x="10.24" y="10.24" width="43.52" height="43.52" stroke-width="6.4" />
       <rect class="fill-signal" x="20.48" y="20.48" width="23.04" height="23.04" transform="rotate(29 32 32)" />
     </svg>
   )

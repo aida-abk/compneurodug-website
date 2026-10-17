@@ -23,7 +23,7 @@ const { name, role, email, photo, photoAlt, pronouns } = Astro.props.member.data
         />
       ) : (
         <div class="flex size-full items-center justify-center" aria-hidden="true">
-          <span class="font-serif text-h1 font-medium text-muted">{initials(name)}</span>
+          <span class="font-serif text-h1 font-display text-muted">{initials(name)}</span>
         </div>
       )
     }

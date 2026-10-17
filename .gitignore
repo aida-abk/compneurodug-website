@@ -26,3 +26,6 @@ pnpm-debug.log*
 
 # vercel local files
 .vercel/
+
+# local editor/agent config
+.claude/

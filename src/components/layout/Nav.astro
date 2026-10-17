@@ -1,5 +1,6 @@
 ---
 import Lockup from './Lockup.astro';
+import InstagramIcon from '../ui/InstagramIcon.astro';
 import { NAV_LINKS, SITE } from '../../lib/site';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -26,7 +27,17 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
           </li>
         ))
       }
-      <li class="ml-3">
+      <li class="ml-2">
+        <a
+          href={SITE.instagram}
+          class="inline-flex size-10 items-center justify-center rounded-sm text-muted transition-colors hover:bg-surface hover:text-ink"
+          aria-label="Instagram"
+          rel="noopener"
+        >
+          <InstagramIcon class="size-5" />
+        </a>
+      </li>
+      <li class="ml-1">
         <a
           href={SITE.substack.subscribe}
           class="inline-flex items-center rounded-sm bg-signal px-4 py-2 text-small font-medium text-ink transition-opacity hover:opacity-90"
@@ -66,12 +77,20 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
           </li>
         ))
       }
-      <li class="pt-6">
+      <li class="flex flex-wrap items-center gap-3 pt-6">
         <a
           href={SITE.substack.subscribe}
           class="inline-flex items-center rounded-sm bg-signal px-4 py-3 text-body font-medium text-ink"
         >
           Subscribe to the newsletter
+        </a>
+        <a
+          href={SITE.instagram}
+          class="inline-flex items-center gap-2 rounded-sm border border-rule px-4 py-3 text-body text-ink"
+          rel="noopener"
+        >
+          <InstagramIcon class="size-5" />
+          Instagram
         </a>
       </li>
     </ul>

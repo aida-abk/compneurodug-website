@@ -3,6 +3,28 @@
 @import 'lenis/dist/lenis.css';
 
 /*
+ * Metric-matched fallbacks: while the web fonts load, text renders in a
+ * local font stretched to the same size, so nothing jumps when they swap
+ * (homepage CLS 0.089 → ~0). Measured against Young Serif / Hanken Grotesk.
+ */
+@font-face {
+  font-family: 'Young Serif Fallback';
+  src: local('Georgia');
+  size-adjust: 114.18%;
+  ascent-override: 91.61%;
+  descent-override: 32.06%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Hanken Grotesk Fallback';
+  src: local('Arial'), local('Helvetica');
+  size-adjust: 100.45%;
+  ascent-override: 99.55%;
+  descent-override: 29.87%;
+  line-gap-override: 0%;
+}
+
+/*
  * Map design tokens onto Tailwind. Tailwind's default palette, fonts and
  * type sizes are cleared so only brand tokens exist as utilities —
  * `bg-blue-500` or `text-xl` will not compile to anything.
@@ -29,6 +51,7 @@
   --font-weight-*: initial;
   --font-weight-regular: var(--dug-weight-regular);
   --font-weight-medium: var(--dug-weight-medium);
+  --font-weight-display: var(--dug-weight-display);
 
   --text-*: initial;
   --text-display: var(--dug-display-size);
@@ -109,7 +132,7 @@
   h1,
   h2 {
     font-family: var(--dug-font-serif);
-    font-weight: var(--dug-weight-medium);
+    font-weight: var(--dug-weight-display);
   }
 
   ::selection {
@@ -121,6 +144,11 @@
     outline: var(--dug-focus-width) solid var(--dug-signal-text);
     outline-offset: var(--dug-focus-offset);
     border-radius: var(--dug-radius);
+  }
+
+  /* Coral focus rings don't show on Structure; use Field there. */
+  .on-dark :focus-visible {
+    outline-color: var(--dug-field);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -149,7 +177,7 @@
   .prose-dug h2 {
     margin-top: 2.5em;
     font-family: var(--dug-font-serif);
-    font-weight: var(--dug-weight-medium);
+    font-weight: var(--dug-weight-display);
     font-size: var(--dug-h2-size);
     line-height: var(--dug-h2-leading);
     letter-spacing: var(--dug-h2-tracking);
