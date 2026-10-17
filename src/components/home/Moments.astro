@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeader from '../ui/SectionHeader.astro';
+import InstagramIcon from '../ui/InstagramIcon.astro';
+import { MOMENTS } from '../../lib/moments';
+import { SITE } from '../../lib/site';
+---
+
+<section aria-labelledby="moments-heading" class="border-t border-rule py-20 md:py-28">
+  <div class="container-page">
+    <SectionHeader index="04 · Moments" title="Moments" id="moments-heading">
+      <a
+        href={SITE.instagram}
+        class="inline-flex items-center gap-2 text-signal-text underline decoration-rule underline-offset-4 hover:decoration-signal-text"
+        rel="noopener"
+      >
+        <InstagramIcon class="size-4" />
+        More on Instagram ↗
+      </a>
+    </SectionHeader>
+
+    <ul class="mt-12 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+      {
+        MOMENTS.map(({ src, alt }, i) => (
+          <li
+            class:list={[
+              'group overflow-hidden rounded-sm bg-surface',
+              i === 0 ? 'col-span-2 row-span-2' : 'aspect-photo',
+            ]}
+          >
+            <Image
+              src={src}
+              alt={alt}
+              widths={i === 0 ? [640, 960, 1280] : [320, 480, 720]}
+              sizes={i === 0 ? '(min-width: 48rem) 50vw, 100vw' : '(min-width: 48rem) 25vw, 50vw'}
+              loading="lazy"
+              class="size-full object-cover transition-transform duration-(--dug-duration-slow) group-hover:scale-103"
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

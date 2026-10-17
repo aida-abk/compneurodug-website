@@ -78,7 +78,7 @@ src/
     ui/         Reusable pieces: Button, PageHeader, SectionHeader, EventList, EventsEmpty, PostCard, MemberCard, LogoMark
     hero/       3D hero (hero-gate.ts, hero-scene.ts) and its static SVG fallback
     figures/    Scroll-traced line drawings and FIG labels
-    home/       Homepage sections (Hero, Mission, WhatWeDo, UpcomingEvents, LatestNewsletter)
+    home/       Homepage sections (Hero, Mission, WhatWeDo, UpcomingEvents, Moments, LatestNewsletter)
   content/
     events/     One .md per event
     members/    One .md per team member (photos alongside or in src/assets)
@@ -115,6 +115,7 @@ Work one phase at a time and stop after each for Aida to review in the browser.
 
 ## Open items
 
+- Event photos: 9 in the homepage Moments grid (`src/lib/moments.ts`), metadata stripped. Event names and dates not yet known, so they aren't linked to past events.
 - Headshots: Nhi, Cal, Tiger and Aida done (square crops in src/assets/team). Ah-Young's photo still needed as a file.
 - Resources: starter entries are real, verified links (Neuromatch, Neuronal Dynamics, Dayan & Abbott, Carney, UTRA, Neuroscience concentration) chosen by Claude; Aida to review. Brown course entries still needed (one draft placeholder).
 - Copy is deliberately short (Oct 2026 trim): one line per intro, no paragraph beside section titles unless it is an instruction. Keep it that way; detail belongs in guides.

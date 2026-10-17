@@ -27,7 +27,8 @@ To add a new item, open any existing file in the same folder, copy its contents,
 | Resource links | `src/content/resources/` | `category` is one of `concentration`, `advising`, `courses`, `research`, `reading`. Keep `summary` to a few words. |
 | Guides (long pages) | `src/content/guides/` | Written in Markdown. The file name becomes the address: `my-guide.md` → `/resources/my-guide`. |
 | Events (advanced) | `src/content/events/` | Only for events the form can't handle. Same day and title as a form event? The form version wins. |
-| Names, links, emails | `src/lib/site.ts` | Substack, Ed board, contact email, partner logos. |
+| Names, links, emails | `src/lib/site.ts` | Substack, Instagram, Ed board, contact email, partner logos. |
+| Homepage photos (Moments) | `src/assets/moments/` + `src/lib/moments.ts` | Add the image file, then one line in `moments.ts` with a short description. The first photo shows large. Only photos of people happy to be on a public site. |
 
 Things to know:
 

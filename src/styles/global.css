@@ -88,6 +88,7 @@
   --radius-sm: var(--dug-radius);
 
   --aspect-banner: var(--dug-aspect-banner);
+  --aspect-photo: var(--dug-aspect-photo);
 
   --ease-out: var(--dug-ease-out);
   --default-transition-duration: var(--dug-duration-base);
