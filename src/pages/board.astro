@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
-import SectionHeader from '../components/ui/SectionHeader.astro';
 import Figure from '../components/figures/Figure.astro';
 import PyramidalNeuron from '../components/figures/PyramidalNeuron.astro';
 import MemberCard from '../components/ui/MemberCard.astro';
@@ -10,19 +9,24 @@ import { getMembers } from '../lib/members';
 import { SITE } from '../lib/site';
 
 const members = await getMembers();
-
-// DRAFT COPY — Aida to review.
 ---
 
-<BaseLayout title="About" description={`Who we are and who runs the ${SITE.name.standard} at Brown.`}>
-  <PageHeader label="About" title="About the DUG">
-    For anyone at Brown curious how brains compute.
+<BaseLayout title="Board members" description={`The students who run the ${SITE.name.standard} at Brown.`}>
+  <PageHeader label="Board" title="Board members">
+    The students who run the DUG. Questions? Email
+    <a href={`mailto:${SITE.email}`} class="text-signal-text underline underline-offset-4">{SITE.email}</a>.
   </PageHeader>
 
-  <section aria-labelledby="dug-heading" class="container-page py-20 md:py-28">
-    <div class="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-6">
+  <section aria-label="Board members" id="team" class="container-page py-16 md:py-24">
+    <ul class="grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-3 lg:grid-cols-5">
+      {members.map((member) => <MemberCard member={member} />)}
+    </ul>
+  </section>
+
+  <section aria-labelledby="dug-heading" class="border-t border-rule bg-surface py-20 md:py-28">
+    <div class="container-page grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-6">
       <div class="lg:col-span-6">
-        <p class="label text-signal-text">01 · Who we are</p>
+        <p class="label text-signal-text">Who we are</p>
         <h2 id="dug-heading" class="mt-3 text-h1 text-ink">One neuron is interesting. A network is the point.</h2>
         <p class="mt-8 max-w-xl text-body text-muted">
           A student-run group for the Computational Neuroscience concentration. We connect students from neuroscience,
@@ -35,22 +39,10 @@ const members = await getMembers();
     </div>
   </section>
 
-  <section aria-labelledby="team-heading" class="border-t border-rule bg-surface py-20 md:py-28">
-    <div class="container-page">
-      <SectionHeader index="02 · Team" title="Who runs it" id="team-heading">
-        Questions? Email
-        <a href={`mailto:${SITE.email}`} class="text-signal-text underline underline-offset-4">{SITE.email}</a>.
-      </SectionHeader>
-      <ul class="mt-12 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-3 lg:grid-cols-5">
-        {members.map((member) => <MemberCard member={member} />)}
-      </ul>
-    </div>
-  </section>
-
   <section aria-labelledby="join-heading" class="container-page py-20 md:py-28">
     <div class="grid gap-8 rounded-sm border border-rule bg-surface p-8 md:grid-cols-12 md:items-center md:p-12">
       <div class="md:col-span-8">
-        <p class="label text-signal-text">03 · Get involved</p>
+        <p class="label text-signal-text">Get involved</p>
         <h2 id="join-heading" class="mt-3 text-h2 text-ink">Everything starts with the newsletter.</h2>
       </div>
       <div class="md:col-span-4 md:justify-self-end">

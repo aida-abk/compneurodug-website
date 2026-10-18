@@ -31,7 +31,7 @@ Before finishing any phase, `npm run build` and `npx astro check` both pass.
 - Hero: a 3D wireframe crystalline cluster on the light Field background, drawn in Structure lines with coral Signal nodes (echoes the logo). Slow movement, subtle cursor response.
 - Content sections: editorial and scientific. Fine single-weight anatomical line drawings with small "FIG. 1"-style DM Mono labels, and a grid of short labeled descriptions beneath. Drawings trace themselves in on scroll.
 - Type (Oct 2026, Aida's choice): Young Serif for display and headings (one weight, use `font-display`), Hanken Grotesk for text, DM Mono for labels. This replaces the board's Newsreader + DM Sans; the board's roles, scale and colors still apply. The Figma text styles should be updated to match.
-- Dark green (Structure) is used for the footer. Partner logos never sit on it: they live on the light band above. On dark, small text uses Field or Rule (never coral), and focus rings switch to Field via `.on-dark`.
+- Dark green (Structure) is used for the footer. Partner logos never sit on it: the Brown logo lives in the light strip at the very bottom. On dark, small text uses Field or Rule (never coral), and focus rings switch to Field via `.on-dark`.
 - Brand rules from the Figma board apply: proportion roughly Field 60% · Surface 25% · Structure 10% · Signal 5%. Text under 24px is Ink, Muted or Signal Text — never bright Signal.
 
 ## The token rule
@@ -87,7 +87,7 @@ src/
   content.config.ts  Collection schemas — the contract for content files
   layouts/      Base page layout(s)
   lib/          Plain TS helpers (motion/ holds trace.ts and smooth-scroll.ts): site.ts (names, links, nav), events.ts, substack.ts (RSS at build time), format.ts (dates in America/New_York)
-  pages/        Routes: index, about, events, events/[slug], resources, resources/[slug] (guides), newsletter, 404
+  pages/        Routes: index, board (/about redirects here), events, events/[slug], resources, resources/[slug] (guides), newsletter, 404
   styles/       tokens.css (variables), global.css (Tailwind + @theme)
 public/         Files served as-is (favicons, OG images, static fallbacks)
 ```
@@ -116,7 +116,7 @@ Work one phase at a time and stop after each for Aida to review in the browser.
 ## Open items
 
 - Event photos: 9 in the homepage Moments grid (`src/lib/moments.ts`), metadata stripped. Event names and dates not yet known, so they aren't linked to past events.
-- Headshots: Nhi, Cal, Tiger and Aida done (square crops in src/assets/team). Ah-Young's photo still needed as a file.
+- Headshots: all five done (square crops in src/assets/team). Ah-Young's source is only 432px; a larger file would look sharper.
 - Resources: starter entries are real, verified links (Neuromatch, Neuronal Dynamics, Dayan & Abbott, Carney, UTRA, Neuroscience concentration) chosen by Claude; Aida to review. Brown course entries still needed (one draft placeholder).
 - Copy is deliberately short (Oct 2026 trim): one line per intro, no paragraph beside section titles unless it is an instruction. Keep it that way; detail belongs in guides.
 - Course plan worksheet and Honors application links for the declaration guide (not found publicly)

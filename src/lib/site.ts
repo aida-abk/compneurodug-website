@@ -30,7 +30,7 @@ export const SITE = {
 export type NavLink = { href: string; label: string };
 
 export const NAV_LINKS: NavLink[] = [
-  { href: '/about', label: 'About' },
+  { href: '/board', label: 'Board' },
   { href: '/events', label: 'Events' },
   { href: '/resources', label: 'Resources' },
   { href: '/newsletter', label: 'Newsletter' },

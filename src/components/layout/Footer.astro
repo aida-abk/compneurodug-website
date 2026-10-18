@@ -1,8 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import Lockup from './Lockup.astro';
 import LogoMark from '../ui/LogoMark.astro';
-import InstagramIcon from '../ui/InstagramIcon.astro';
 import { NAV_LINKS, PARTNERS, SITE } from '../../lib/site';
 import brownLogo from '../../assets/partners/brown-university.png';
 
@@ -10,8 +8,6 @@ const year = new Date().getFullYear();
 
 const FOLLOW = [
   { href: SITE.instagram, label: 'Instagram' },
-  { href: SITE.substack.home, label: 'Substack newsletter' },
-  { href: SITE.substack.subscribe, label: 'Subscribe by email' },
   { href: SITE.ed, label: 'Advising board on Ed' },
   { href: `mailto:${SITE.email}`, label: SITE.email },
 ];
@@ -20,23 +16,6 @@ const link = 'text-small text-field underline decoration-transparent underline-o
 ---
 
 <footer class="mt-auto">
-  <!-- Partner logos stay on a light band: the brand board forbids them on dark backgrounds. -->
-  <div class="border-t border-rule bg-surface">
-    <div class="container-page flex flex-wrap items-center gap-x-5 gap-y-6 py-8">
-      <Lockup markClass="size-mark-footer" />
-      {
-        PARTNERS.brown.show && (
-          <>
-            <span class="hidden h-mark-footer w-px bg-rule lg:block" aria-hidden="true" />
-            <a href={PARTNERS.brown.href} class="rounded-sm" rel="noopener">
-              <Image src={brownLogo} alt={PARTNERS.brown.name} class="h-mark-footer w-auto" height={96} />
-            </a>
-          </>
-        )
-      }
-    </div>
-  </div>
-
   <div class="on-dark bg-structure text-field">
     <div class="container-page grid gap-12 py-16 md:grid-cols-12 md:gap-6">
       <div class="md:col-span-6">
@@ -48,14 +27,6 @@ const link = 'text-small text-field underline decoration-transparent underline-o
           The {SITE.name.formal} at {SITE.university}. Talks, advising, research and community at the intersection
           of brains and computation.
         </p>
-        <a
-          href={SITE.instagram}
-          class="mt-8 inline-flex items-center gap-2 rounded-sm border border-field/30 px-4 py-2 text-small text-field transition-colors hover:border-field"
-          rel="noopener"
-        >
-          <InstagramIcon class="size-4" />
-          @brown_compneuro_dug
-        </a>
       </div>
 
       <nav aria-label="Footer" class="md:col-span-3">
@@ -89,12 +60,19 @@ const link = 'text-small text-field underline decoration-transparent underline-o
         </ul>
       </div>
     </div>
+  </div>
 
-    <div class="border-t border-field/15">
-      <div class="container-page flex flex-col gap-2 py-6 sm:flex-row sm:items-center sm:justify-between">
-        <p class="label text-rule">© {year} {SITE.name.standard}</p>
-        <p class="label text-rule">{SITE.university} · Providence, RI</p>
-      </div>
+  <!-- Light strip: the brand board forbids partner logos on dark backgrounds. -->
+  <div class="bg-surface">
+    <div class="container-page flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between">
+      <p class="label text-muted">© {year} {SITE.name.standard} · Providence, RI</p>
+      {
+        PARTNERS.brown.show && (
+          <a href={PARTNERS.brown.href} class="rounded-sm self-start sm:self-auto" rel="noopener">
+            <Image src={brownLogo} alt={PARTNERS.brown.name} class="h-mark-nav w-auto" height={80} />
+          </a>
+        )
+      }
     </div>
   </div>
 </footer>

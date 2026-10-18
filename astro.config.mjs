@@ -15,6 +15,8 @@ export default defineConfig({
   // The whole stylesheet is ~6 KB gzipped: inlining it removes the only
   // render-blocking request, which was delaying mobile LCP by ~1.3s.
   build: { inlineStylesheets: 'always' },
+  // /about was renamed /board (Oct 2026); keep old links working.
+  redirects: { '/about': '/board' },
 
   vite: {
     plugins: [tailwindcss()],

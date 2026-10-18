@@ -23,4 +23,4 @@ You must declare a concentration **no later than the middle of your fourth semes
 
 ## Questions?
 
-Post on the [Ed advising board](https://edstem.org/us/join/JaEjcM), email the department at [neuroundergrad@brown.edu](mailto:neuroundergrad@brown.edu), or ask any of the [DUG leaders](/about#team-heading).
+Post on the [Ed advising board](https://edstem.org/us/join/JaEjcM), email the department at [neuroundergrad@brown.edu](mailto:neuroundergrad@brown.edu), or ask any of the [DUG board members](/board#team).
