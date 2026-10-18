@@ -115,6 +115,7 @@ Work one phase at a time and stop after each for Aida to review in the browser.
 
 ## Open items
 
+- Course map: `src/lib/course-map.ts`, transcribed from the 2026–27 Bulletin (checked 2026-10-17); rendered by `components/figures/CourseMap.astro` on Resources. Courses@Brown blocks automated requests, so offering terms can't be pulled automatically; add `note`s by hand.
 - Event photos: 9 in the homepage Moments grid (`src/lib/moments.ts`), metadata stripped. Event names and dates not yet known, so they aren't linked to past events.
 - Headshots: all five done (square crops in src/assets/team). Ah-Young's source is only 432px; a larger file would look sharper.
 - Resources: starter entries are real, verified links (Neuromatch, Neuronal Dynamics, Dayan & Abbott, Carney, UTRA, Neuroscience concentration) chosen by Claude; Aida to review. Brown course entries still needed (one draft placeholder).
