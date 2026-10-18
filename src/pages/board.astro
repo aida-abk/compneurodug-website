@@ -17,7 +17,8 @@ const members = await getMembers();
     <a href={`mailto:${SITE.email}`} class="text-signal-text underline underline-offset-4">{SITE.email}</a>.
   </PageHeader>
 
-  <section aria-label="Board members" id="team" class="container-page py-16 md:py-24">
+  <section aria-labelledby="team-heading" id="team" class="container-page py-16 md:py-24">
+    <h2 id="team-heading" class="sr-only">Current board</h2>
     <ul class="grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-3 lg:grid-cols-5">
       {members.map((member) => <MemberCard member={member} />)}
     </ul>

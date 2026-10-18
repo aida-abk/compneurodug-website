@@ -9,8 +9,9 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 
 <header class="sticky top-0 z-50 border-b border-rule bg-field">
   <nav aria-label="Main" class="container-page flex h-nav items-center justify-between gap-6">
-    <a href="/" class="-m-1 rounded-sm p-1" aria-label={`${SITE.name.standard}, home`}>
+    <a href="/" class="-m-1 rounded-sm p-1">
       <Lockup />
+      <span class="sr-only">, home</span>
     </a>
 
     <ul class="hidden items-center gap-1 lg:flex">
