@@ -40,7 +40,8 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
       </li>
       <li class="ml-1">
         <a
-          href={SITE.substack.subscribe}
+          href={SITE.mailingList}
+          rel="noopener"
           class="inline-flex items-center rounded-sm bg-signal px-4 py-2 text-small font-medium text-ink transition-opacity hover:opacity-90"
         >
           Subscribe
@@ -80,10 +81,11 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
       }
       <li class="flex flex-wrap items-center gap-3 pt-6">
         <a
-          href={SITE.substack.subscribe}
+          href={SITE.mailingList}
+          rel="noopener"
           class="inline-flex items-center rounded-sm bg-signal px-4 py-3 text-body font-medium text-ink"
         >
-          Subscribe to the newsletter
+          Join the mailing list
         </a>
         <a
           href={SITE.instagram}
