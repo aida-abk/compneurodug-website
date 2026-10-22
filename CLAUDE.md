@@ -78,7 +78,7 @@ src/
     ui/         Reusable pieces: Button, PageHeader, SectionHeader, EventList, EventsEmpty, PostCard, MemberCard, LogoMark
     hero/       3D hero (hero-gate.ts, hero-scene.ts) and its static SVG fallback
     figures/    Scroll-traced line drawings and FIG labels
-    home/       Homepage sections (Hero, Mission, WhatWeDo, UpcomingEvents, Moments, LatestNewsletter)
+    home/       Homepage sections (Hero, Mission, WhatWeDo, Mentoring, UpcomingEvents, Moments, LatestNewsletter)
   content/
     events/     One .md per event
     members/    One .md per team member (photos alongside or in src/assets)

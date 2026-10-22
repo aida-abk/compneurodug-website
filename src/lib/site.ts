@@ -11,6 +11,9 @@ export const SITE = {
   description:
     'The Computational Neuroscience Departmental Undergraduate Group at Brown University: talks, advising, research and community at the intersection of brains and computation.',
   email: 'compneurodug@brown.edu',
+  // Peer mentoring sign-up (Google Form), for mentors and mentees.
+  mentoringForm:
+    'https://docs.google.com/forms/d/e/1FAIpQLSftZLinX1pEsrsr1e7zUn0zzeE-HiBQp4AD_P811rJNXvdJ7A/viewform?usp=dialog',
   // Mailing-list sign-up (Google Form); the header Subscribe button links here.
   mailingList:
     'https://docs.google.com/forms/d/e/1FAIpQLSdWNpQI09VTjt2nAnSewvvGF4J0KB4SvryI7C3NejVVLNcoow/viewform?usp=dialog',
