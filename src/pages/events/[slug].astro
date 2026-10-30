@@ -3,7 +3,7 @@ import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Button from '../../components/ui/Button.astro';
 import { getEvents, EVENT_TYPE_LABELS, type Event } from '../../lib/events';
-import { formatLongDate, formatTime } from '../../lib/format';
+import { formatLongDate, formatTime, formatTimeRange, formatWeekdayDate } from '../../lib/format';
 
 export async function getStaticPaths() {
   const events = await getEvents();
@@ -28,6 +28,7 @@ const time = data.endDate ? `${formatTime(data.date)} – ${formatTime(data.endD
         <a href="/events" class="label text-muted hover:text-ink">← All events</a>
         <p class="mt-10 label text-signal-text">
           {EVENT_TYPE_LABELS[data.type]}
+          {data.tentative && <span class="ml-2 text-muted">· Tentative</span>}
           {data.draft && <span class="ml-2 text-muted">· Draft</span>}
           {isPast && <span class="ml-2 text-muted">· Past event</span>}
         </p>
@@ -37,6 +38,27 @@ const time = data.endDate ? `${formatTime(data.date)} – ${formatTime(data.endD
 
     <div class="container-page grid gap-12 py-16 md:py-20 lg:grid-cols-12 lg:gap-6">
       <aside class="lg:col-span-4" aria-label="Event details">
+        {data.sessions?.length ? (
+          <>
+            <h2 class="label text-muted">Sessions</h2>
+            <ol class="mt-3 divide-y divide-rule border-y border-rule">
+              {data.sessions.map((s) => (
+                <li class="py-4 text-small">
+                  <time datetime={s.start.toISOString()} class="block font-medium text-ink">
+                    {formatWeekdayDate(s.start)}
+                  </time>
+                  <span class="block text-ink">{formatTimeRange(s.start, s.end)}</span>
+                  <span class="block text-muted">{s.location}</span>
+                  {s.contact && (
+                    <a href={`mailto:${s.contact}`} class="mt-1 inline-block text-signal-text underline underline-offset-4">
+                      {s.contact}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </>
+        ) : (
         <dl class="divide-y divide-rule border-y border-rule">
           <div class="grid grid-cols-3 gap-4 py-4">
             <dt class="label text-muted">Date</dt>
@@ -53,6 +75,7 @@ const time = data.endDate ? `${formatTime(data.date)} – ${formatTime(data.endD
             <dd class="col-span-2 text-small text-ink">{data.location}</dd>
           </div>
         </dl>
+        )}
         {
           !isPast && (data.rsvp || data.link) && (
             <div class="mt-8 flex flex-wrap gap-3">

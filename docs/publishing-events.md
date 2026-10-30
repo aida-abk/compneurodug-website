@@ -65,7 +65,7 @@ Create a Google Form called **Add an event** with these questions. **Use these t
 | 3 | Start time | Time | Yes |
 | 4 | End time | Time | No |
 | 5 | Location | Short answer | Yes |
-| 6 | Event type | Dropdown: Speaker series, Journal club, Social, Workshop, Other | Yes |
+| 6 | Event type | Dropdown: Speaker series, Advising, Study session, Journal club, Social, Workshop, Other | Yes |
 | 7 | One-line summary | Short answer | Yes |
 | 8 | Description | Paragraph | No |
 | 9 | RSVP link | Short answer (Response validation → Text → URL) | No |

@@ -2,7 +2,12 @@
 import type { Event } from '../../lib/events';
 import { EVENT_TYPE_LABELS } from '../../lib/events';
 import Button from './Button.astro';
-import { formatDay, formatMonth, formatWeekdayTime, formatYear } from '../../lib/format';
+import { formatDay, formatMonth, formatWeekdayDate, formatWeekdayTime, formatYear } from '../../lib/format';
+
+// Multi-session events: "Sat, Nov 7 – Mon, Nov 9" and their distinct places.
+const sessionDays = (s: { start: Date }[]) =>
+  s.length > 1 ? `${formatWeekdayDate(s[0].start)} – ${formatWeekdayDate(s[s.length - 1].start)}` : formatWeekdayDate(s[0].start);
+const sessionPlaces = (s: { location: string }[]) => [...new Set(s.map((x) => x.location))].join(' · ');
 
 interface Props {
   events: Event[];
@@ -31,6 +36,7 @@ const { events, past = false } = Astro.props;
         <div class="md:col-span-6">
           <p class="label text-signal-text">
             {EVENT_TYPE_LABELS[data.type]}
+            {data.tentative && <span class="ml-2 text-muted">· Tentative</span>}
             {data.draft && <span class="ml-2 text-muted">· Draft</span>}
           </p>
           <h3 class="mt-2 text-h3 font-medium text-ink">
@@ -49,11 +55,20 @@ const { events, past = false } = Astro.props;
           {!past && (
             <>
               <dt class="label text-muted">When</dt>
-              <dd class="text-ink">{formatWeekdayTime(data.date)}</dd>
+              <dd class="text-ink">
+                {data.sessions?.length ? (
+                  <>
+                    {sessionDays(data.sessions)}
+                    <span class="block text-muted">{data.sessions.length} sessions</span>
+                  </>
+                ) : (
+                  formatWeekdayTime(data.date)
+                )}
+              </dd>
             </>
           )}
           <dt class="label text-muted">Where</dt>
-          <dd class="text-ink">{data.location}</dd>
+          <dd class="text-ink">{data.sessions?.length ? sessionPlaces(data.sessions) : data.location}</dd>
         </dl>
       </li>
     ))

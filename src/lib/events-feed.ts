@@ -30,9 +30,11 @@ const feedRow = z.object({
 const feed = z.object({ events: z.array(z.unknown()) });
 
 // Form dropdown label → schema type.
-function toType(label: string): 'talk' | 'journal-club' | 'social' | 'workshop' | 'other' {
+function toType(label: string): 'talk' | 'advising' | 'study' | 'journal-club' | 'social' | 'workshop' | 'other' {
   const l = label.toLowerCase();
   if (l.includes('speaker') || l.includes('talk')) return 'talk';
+  if (l.includes('advising')) return 'advising';
+  if (l.includes('study')) return 'study';
   if (l.includes('journal')) return 'journal-club';
   if (l.includes('social')) return 'social';
   if (l.includes('workshop')) return 'workshop';

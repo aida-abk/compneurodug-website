@@ -41,6 +41,8 @@ export async function getPastEvents(now = new Date()): Promise<Event[]> {
 
 export const EVENT_TYPE_LABELS: Record<Event['data']['type'], string> = {
   talk: 'Speaker series',
+  advising: 'Advising',
+  study: 'Study session',
   'journal-club': 'Journal club',
   social: 'Social',
   workshop: 'Workshop',

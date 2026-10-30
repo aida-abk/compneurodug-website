@@ -11,12 +11,27 @@ const eventSchema = z.object({
   date: z.coerce.date(),
   endDate: z.coerce.date().optional(),
   location: z.string(),
-  type: z.enum(['talk', 'journal-club', 'social', 'workshop', 'other']),
+  type: z.enum(['talk', 'advising', 'study', 'journal-club', 'social', 'workshop', 'other']),
   summary: z.string(),
   // Sign-up form (Google Form etc.). Shows an RSVP button.
   rsvp: z.url().optional(),
   // External page for the event, if any.
   link: z.url().optional(),
+  // Details not final yet: shows a "Tentative" label.
+  tentative: z.boolean().default(false),
+  // For events that run as several slots (e.g. advising hours). When set,
+  // `date` is the first session's start and `endDate` the last one's end.
+  sessions: z
+    .array(
+      z.object({
+        start: z.coerce.date(),
+        end: z.coerce.date(),
+        location: z.string(),
+        // Shown on that session, e.g. the host's email.
+        contact: z.email().optional(),
+      }),
+    )
+    .optional(),
   draft: z.boolean().default(false),
 });
 

@@ -15,6 +15,13 @@ export const formatLongDate = (d: Date) =>
 
 export const formatYear = (d: Date) => new Intl.DateTimeFormat('en-US', { year: 'numeric', timeZone: TZ }).format(d);
 
+export const formatWeekdayDate = (d: Date) =>
+  new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: TZ }).format(d);
+
+/** "2:00 – 4:00 PM" or "10:00 AM – 12:00 PM" */
+export const formatTimeRange = (start: Date, end: Date) =>
+  new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', timeZone: TZ }).formatRange(start, end);
+
 export const formatTime = (d: Date) =>
   new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', timeZone: TZ }).format(d);
 
