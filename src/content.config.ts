@@ -39,7 +39,12 @@ const eventSchema = z.object({
 // Google Form (via the Apps Script feed). src/lib/events.ts merges them.
 const events = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/events' }),
-  schema: eventSchema,
+  // Markdown events can also carry a poster image (shown on the event page).
+  schema: ({ image }) =>
+    eventSchema.extend({
+      poster: image().optional(),
+      posterAlt: z.string().optional(),
+    }),
 });
 
 const formEvents = defineCollection({
