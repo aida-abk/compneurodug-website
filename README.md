@@ -100,6 +100,8 @@ Vercel builds every push to `main` and makes a preview for every other branch. F
 
 The site also rebuilds when the events form or sheet changes, and every night at 4 AM, through a Vercel deploy hook called by the Apps Script.
 
+Events move from Upcoming to Past only when the site rebuilds, so `.github/workflows/daily-rebuild.yml` triggers a rebuild every night (4:15 AM Eastern). It needs a Vercel deploy hook saved as the GitHub secret `VERCEL_DEPLOY_HOOK`; setup steps are at the top of that file. GitHub pauses scheduled workflows after 60 days without repository activity; re-enable it from the Actions tab if that happens.
+
 ## Credits
 
 Brand and design by the DUG leadership, 2026. Line drawings are original. The Brown University logo is used with approval.

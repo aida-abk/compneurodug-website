@@ -14,6 +14,7 @@ Website for Brown's Computational Neuroscience Departmental Undergraduate Group 
 - GSAP (ScrollTrigger, DrawSVG) for scroll animation, Lenis for smooth scrolling
 - Content collections (Markdown) for events, members, resources
 - Static output (`dist/`), deployed to Vercel from GitHub. No adapter: there are no server routes
+- Upcoming vs past events is decided at build time. `.github/workflows/daily-rebuild.yml` calls a Vercel deploy hook nightly (secret `VERCEL_DEPLOY_HOOK`, set by Aida) so ended events move to Past
 
 ## Commands
 

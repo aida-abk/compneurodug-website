@@ -1,0 +1,29 @@
+# Rebuilds the site every night so events that have ended move from
+# "Upcoming" to "Past" (the site is static: dates are sorted at build time).
+#
+# Setup (once): in Vercel → Project → Settings → Git → Deploy Hooks, create a
+# hook for the `main` branch, then in GitHub → Settings → Secrets and
+# variables → Actions, add it as a repository secret named VERCEL_DEPLOY_HOOK.
+# Run it by hand from the Actions tab ("Run workflow") to test.
+
+name: Daily rebuild
+
+on:
+  schedule:
+    - cron: '15 9 * * *' # 09:15 UTC = 4:15 AM EST / 5:15 AM EDT
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel deploy hook
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::warning::VERCEL_DEPLOY_HOOK secret is not set; skipping. See the comment at the top of this file."
+            exit 0
+          fi
+          curl -fsS -X POST "$HOOK"
+          echo "Rebuild requested."
